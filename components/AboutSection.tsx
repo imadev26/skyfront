@@ -5,8 +5,16 @@ import Image from "next/image";
 import Link from 'next/link';
 import { ArrowRight } from "lucide-react";
 
+interface AboutSectionProps {
+  dict: any;
+  lang?: string;
+}
 
-export default function AboutSection() {
+function renderBold(text: string) {
+  return { __html: text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') };
+}
+
+export default function AboutSection({ dict, lang = 'fr' }: AboutSectionProps) {
   return (
     <>
       {/* SECTION 1 */}
@@ -29,28 +37,25 @@ export default function AboutSection() {
           {/* TEXT SIDE */}
           <div>
             <p className="text-[#C04000] font-bold mb-3 uppercase tracking-wider">
-              En savoir plus sur nous
+              {dict.about_section.subtitle}
             </p>
 
             <h2 className="text-3xl md:text-5xl font-playfair font-bold text-gray-900 mb-8 leading-tight">
-              SKY EXPERIENCE
-              <br /> Hot Air Balloon Marrakech
+              {dict.about_section.title}
+              <br /> {dict.about_section.title_suffix}
             </h2>
 
             <div className="space-y-5 text-gray-700 leading-relaxed">
-              <p>
-                SKY EXPERIENCE est une agence spécialisée dans les vols en montgolfière à Marrakech, offrant des expériences aériennes uniques au-dessus des paysages emblématiques du Maroc. Reconnue pour son professionnalisme et la qualité de ses prestations, SKY EXPERIENCE s’engage à proposer des vols alliant sécurité, confort et émotion, dans le respect des normes internationales de l’aviation civile.
-              </p>
-
-              <p>
-                Fondée au Maroc, SKY EXPERIENCE s’appuie sur une équipe expérimentée de pilotes certifiés et de professionnels passionnés, disposant d’une solide expertise dans les opérations de hot air balloon Marrakech. Chaque vol est soigneusement préparé afin de garantir une expérience fluide, sereine et inoubliable, du transfert jusqu’à l’atterrissage.
-              </p>
-
+              <p dangerouslySetInnerHTML={renderBold(dict.about_section.content_1)} />
+              <p dangerouslySetInnerHTML={renderBold(dict.about_section.content_2)} />
+              {dict.about_section.content_3 && (
+                <p dangerouslySetInnerHTML={renderBold(dict.about_section.content_3)} />
+              )}
             </div>
 
             <div className="mt-8">
-              <Link href="/about" className="inline-flex items-center gap-2 bg-gradient-to-r from-[#C04000] to-[#D84A1B] text-white px-8 py-3 rounded-full font-bold shadow-lg hover:shadow-xl transition-all hover:scale-105">
-                En Savoir Plus
+              <Link href={`/${lang}/about`} className="inline-flex items-center gap-2 bg-gradient-to-r from-[#C04000] to-[#D84A1B] text-white px-8 py-3 rounded-full font-bold shadow-lg hover:shadow-xl transition-all hover:scale-105">
+                {dict.about_section.cta}
                 <ArrowRight size={20} />
               </Link>
             </div>

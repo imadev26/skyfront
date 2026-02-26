@@ -1,19 +1,66 @@
 'use client';
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Star } from "lucide-react";
-import { TESTIMONIALS } from "@/app/data/testimonials";
+import api from "@/services/api";
 
-export default function TestimonialsSection() {
-    const testimonials = TESTIMONIALS;
+interface Testimonial {
+    name: string;
+    date: string;
+    rating: number;
+    text: string;
+    avatar?: string;
+    bgColor?: string;
+    viewMore?: boolean;
+}
+
+interface TestimonialsSectionProps {
+    dict: any;
+}
+
+export default function TestimonialsSection({ dict }: TestimonialsSectionProps) {
+    const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchReviews = async () => {
+            try {
+                const response = await api.get('/reviews?status=approved&showOnHome=true&limit=3');
+                // Map backend response to Testimonial interface if needed
+                // Backend: name, rating, text, avatar, date
+                // Frontend Testimonial: name, date, rating, text, avatar
+                const mappedReviews = response.data.map((review: any) => ({
+                    name: review.name,
+                    date: new Date(review.date).toLocaleDateString(),
+                    rating: review.rating,
+                    text: review.text,
+                    avatar: review.avatar,
+                    bgColor: 'bg-gray-800' // Default fallback
+                }));
+
+                if (mappedReviews.length > 0) {
+                    setTestimonials(mappedReviews);
+                } else {
+                    setTestimonials(dict.testimonials.items);
+                }
+            } catch (error) {
+                console.error('Error fetching reviews:', error);
+                setTestimonials(dict.testimonials.items);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchReviews();
+    }, [dict.testimonials.items]);
 
     return (
-        <section id="testimonials" className="py-24 bg-[#E6D5C3]"> {/* Beige background similar to screenshot */}
+        <section id="testimonials" className="py-24 bg-[#E6D5C3]">
             <div className="container mx-auto px-4 max-w-7xl">
                 <div className="text-center mb-16">
-                    <h2 className="text-5xl md:text-6xl font-bold text-white mb-4 drop-shadow-sm">Client's Testimonials</h2>
-                    <p className="text-white text-xl md:text-2xl font-light opacity-90">Providing The Best Services For Our Customers</p>
+                    <h2 className="text-5xl md:text-6xl font-bold text-white mb-4 drop-shadow-sm">{dict.testimonials.title}</h2>
+                    <p className="text-white text-xl md:text-2xl font-light opacity-90">{dict.testimonials.subtitle}</p>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -63,7 +110,7 @@ export default function TestimonialsSection() {
                                 </p>
                                 {testimonial.viewMore && (
                                     <button className="text-gray-500 font-bold text-sm flex items-center gap-1 hover:text-[#A03000] transition-colors">
-                                        View more <span className="text-xs">▼</span>
+                                        {dict.testimonials.view_more} <span className="text-xs">▼</span>
                                     </button>
                                 )}
                             </div>

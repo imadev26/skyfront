@@ -6,8 +6,14 @@ import { useRouter } from 'next/navigation';
 
 import { getActiveFlights } from '../app/data/flights';
 
-export default function SearchBar() {
+interface SearchBarProps {
+    lang?: string;
+    dict?: any;
+}
+
+export default function SearchBar({ lang = 'en', dict }: SearchBarProps) {
     const router = useRouter();
+    const t = dict?.search_bar || {};
 
     // State for managing dropdown visibility
     const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -35,8 +41,9 @@ export default function SearchBar() {
     };
 
     // Calendar Data Helper - Dynamic
+    const locale = lang === 'fr' ? 'fr-FR' : 'en-US';
     const [currentDate, setCurrentDate] = useState(new Date());
-    const currentMonth = currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    const currentMonth = currentDate.toLocaleDateString(locale, { month: 'long', year: 'numeric' });
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -64,10 +71,10 @@ export default function SearchBar() {
             <div className="md:hidden bg-gradient-to-r from-[#C04000] to-[#D84A1B] text-white px-4 py-3 rounded-t-2xl xs:rounded-t-[2rem] flex items-center justify-between">
                 <div className="flex items-center gap-2">
                     <Search size={18} strokeWidth={2.5} />
-                    <span className="font-bold text-sm xs:text-base">Search Your Flight</span>
+                    <span className="font-bold text-sm xs:text-base">{t.search_title || 'Search Your Flight'}</span>
                 </div>
                 <div className="text-[10px] xs:text-xs font-medium opacity-90 bg-white/20 px-2 py-1 rounded-full">
-                    Easy Booking
+                    {t.easy_booking || 'Easy Booking'}
                 </div>
             </div>
 
@@ -79,18 +86,18 @@ export default function SearchBar() {
                 <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2 xs:gap-3">
                         <MapPin className="text-[#C04000]" size={20} />
-                        <span className="font-bold text-gray-800 text-base xs:text-lg">Destinations</span>
+                        <span className="font-bold text-gray-800 text-base xs:text-lg">{t.destinations || 'Destinations'}</span>
                     </div>
                     <ChevronDown size={18} className={`text-gray-400 transition-transform duration-300 ${activeDropdown === 'destinations' ? 'rotate-180' : ''}`} />
                 </div>
                 <p className="text-xs xs:text-sm text-gray-500 pl-7 xs:pl-9 truncate font-medium">
-                    {destination || "Where are you going?"}
+                    {destination || t.where_going || 'Where are you going?'}
                 </p>
 
                 {/* Dropdown Menu */}
                 {activeDropdown === 'destinations' && (
                     <div className="absolute top-full left-0 right-0 md:w-full md:min-w-[280px] bg-white rounded-xl shadow-[0_20px_60px_-15px_rgba(192,64,0,0.3)] mt-2 xs:mt-3 md:mt-4 py-2 z-[100] border-2 border-[#C04000]/20 max-h-[280px] overflow-y-auto">
-                        <div className="px-4 xs:px-6 py-2 xs:py-3 text-[10px] xs:text-xs font-bold text-gray-400 uppercase tracking-wider cursor-default bg-gray-50/50">- All Destinations -</div>
+                        <div className="px-4 xs:px-6 py-2 xs:py-3 text-[10px] xs:text-xs font-bold text-gray-400 uppercase tracking-wider cursor-default bg-gray-50/50">— {t.all_destinations || 'All Destinations'} —</div>
                         {['Agadir', 'Marrakech'].map(city => (
                             <div
                                 key={city}
@@ -115,18 +122,18 @@ export default function SearchBar() {
                 <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2 xs:gap-3">
                         <Activity className="text-[#C04000]" size={20} />
-                        <span className="font-bold text-gray-800 text-base xs:text-lg">Activity</span>
+                        <span className="font-bold text-gray-800 text-base xs:text-lg">{t.activity || 'Activity'}</span>
                     </div>
                     <ChevronDown size={18} className={`text-gray-400 transition-transform duration-300 ${activeDropdown === 'activity' ? 'rotate-180' : ''}`} />
                 </div>
                 <p className="text-xs xs:text-sm text-gray-500 pl-7 xs:pl-9 truncate font-medium">
-                    {activity || "All Activity"}
+                    {activity || t.all_activity || 'All Activity'}
                 </p>
 
                 {/* Dropdown Menu */}
                 {activeDropdown === 'activity' && (
                     <div className="absolute top-full left-0 right-0 md:w-full md:min-w-[320px] bg-white rounded-xl shadow-[0_20px_60px_-15px_rgba(192,64,0,0.3)] mt-2 xs:mt-3 md:mt-4 py-2 z-[100] border-2 border-[#C04000]/20 max-h-[320px] overflow-y-auto">
-                        <div className="px-4 xs:px-6 py-2 xs:py-3 text-[10px] xs:text-xs font-bold text-gray-400 uppercase tracking-wider cursor-default bg-gray-50/50 sticky top-0">- All Activity -</div>
+                        <div className="px-4 xs:px-6 py-2 xs:py-3 text-[10px] xs:text-xs font-bold text-gray-400 uppercase tracking-wider cursor-default bg-gray-50/50 sticky top-0">— {t.all_activity || 'All Activity'} —</div>
                         {getActiveFlights().map(item => (
                             <div
                                 key={item.id}
@@ -148,12 +155,12 @@ export default function SearchBar() {
                 <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2 xs:gap-3">
                         <Calendar className="text-[#C04000]" size={20} />
-                        <span className="font-bold text-gray-800 text-base xs:text-lg">When</span>
+                        <span className="font-bold text-gray-800 text-base xs:text-lg">{t.when || 'When'}</span>
                     </div>
                     <ChevronDown size={18} className={`text-gray-400 transition-transform duration-300 ${activeDropdown === 'date' ? 'rotate-180' : ''}`} />
                 </div>
                 <p className="text-xs xs:text-sm text-gray-500 pl-7 xs:pl-9 font-medium">
-                    {date ? date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : "Date from"}
+                    {date ? date.toLocaleDateString('default', { month: 'short', day: 'numeric', year: 'numeric' }) : t.date_from || 'Select date'}
                 </p>
 
                 {/* Date Picker Dropdown */}
@@ -175,7 +182,7 @@ export default function SearchBar() {
                             </div>
                         </div>
                         <div className="grid grid-cols-7 gap-y-2 gap-x-1 text-center text-sm mb-2">
-                            {['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map(d => <div key={d} className="font-bold text-gray-400 text-xs">{d}</div>)}
+                            {(lang === 'fr' ? ['Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa', 'Di'] : ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']).map(d => <div key={d} className="font-bold text-gray-400 text-xs">{d}</div>)}
 
                             {/* Empty slots for start of month alignment */}
                             {Array.from({ length: emptyDays }).map((_, i) => <div key={`empty-${i}`} className="p-2" />)}
@@ -206,12 +213,12 @@ export default function SearchBar() {
                 <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2 xs:gap-3">
                         <Users className="text-[#C04000]" size={20} />
-                        <span className="font-bold text-gray-800 text-base xs:text-lg">Guests</span>
+                        <span className="font-bold text-gray-800 text-base xs:text-lg">{t.guests || 'Guests'}</span>
                     </div>
                     <ChevronDown size={18} className={`text-gray-400 transition-transform duration-300 ${activeDropdown === 'guests' ? 'rotate-180' : ''}`} />
                 </div>
                 <p className="text-xs xs:text-sm text-gray-500 pl-7 xs:pl-9 font-medium">
-                    {guests.adults + guests.children > 0 ? `${guests.adults + guests.children} Guests` : "0 Guests"}
+                    {guests.adults + guests.children > 0 ? `${guests.adults + guests.children} ${t.guests || 'Guests'}` : `0 ${t.guests || 'Guests'}`}
                 </p>
 
                 {/* Dropdown Menu */}
@@ -219,7 +226,7 @@ export default function SearchBar() {
                     <div className="absolute top-full left-0 right-0 md:right-0 md:left-auto bg-white rounded-xl shadow-[0_20px_60px_-15px_rgba(192,64,0,0.3)] mt-2 xs:mt-3 md:mt-4 p-4 xs:p-6 z-[100] border-2 border-[#C04000]/20 w-full md:w-[300px] cursor-default" onClick={(e) => e.stopPropagation()}>
                         {/* Adults */}
                         <div className="flex justify-between items-center mb-6">
-                            <span className="text-gray-700 font-bold text-lg">Adult</span>
+                            <span className="text-gray-700 font-bold text-lg">{t.adults || 'Adults'}</span>
                             <div className="flex items-center gap-4 bg-white border border-gray-200 rounded-full px-3 py-1.5 shadow-sm">
                                 <button className="p-1 hover:text-[#C04000] transition-colors" onClick={() => setGuests(prev => ({ ...prev, adults: Math.max(0, prev.adults - 1) }))}>
                                     <Minus size={18} strokeWidth={2.5} />
@@ -232,7 +239,7 @@ export default function SearchBar() {
                         </div>
                         {/* Children */}
                         <div className="flex justify-between items-center mb-8">
-                            <span className="text-gray-700 font-bold text-lg">Children</span>
+                            <span className="text-gray-700 font-bold text-lg">{t.children || 'Children'}</span>
                             <div className="flex items-center gap-4 bg-white border border-gray-200 rounded-full px-3 py-1.5 shadow-sm">
                                 <button className="p-1 hover:text-[#C04000] transition-colors" onClick={() => setGuests(prev => ({ ...prev, children: Math.max(0, prev.children - 1) }))}>
                                     <Minus size={18} strokeWidth={2.5} />
@@ -247,7 +254,7 @@ export default function SearchBar() {
                             className="w-full bg-[#C04000] text-white font-bold py-3.5 rounded-xl hover:bg-[#A03000] transition-all transform active:scale-95 shadow-lg shadow-orange-500/30"
                             onClick={() => setActiveDropdown(null)}
                         >
-                            Apply
+                            {t.apply || 'Apply'}
                         </button>
                     </div>
                 )}
@@ -260,7 +267,7 @@ export default function SearchBar() {
                     className="bg-gradient-to-r from-[#C04000] to-[#D84A1B] hover:from-[#A03000] hover:to-[#C04000] text-white px-6 xs:px-8 py-3.5 xs:py-4 md:h-full rounded-xl xs:rounded-2xl font-bold flex items-center justify-center gap-2 xs:gap-3 transition-all transform hover:scale-[1.02] active:scale-95 shadow-xl hover:shadow-2xl shadow-orange-600/30 w-full md:w-auto text-base xs:text-lg min-w-[120px] xs:min-w-[140px]"
                 >
                     <Search size={20} className="xs:w-[22px] xs:h-[22px]" strokeWidth={2.5} />
-                    <span className="font-extrabold">Search</span>
+                    <span className="font-extrabold">{t.search || 'Search'}</span>
                 </button>
             </div>
 

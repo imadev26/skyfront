@@ -12,6 +12,7 @@ interface ReviewCardProps {
     initial?: string; // If no avatar, shows initial letter
     bgColor?: string; // Background color for initial square
     rotation?: string; // Optional rotation for visual variety (e.g., 'rotate-1', '-rotate-2')
+    locale?: string;
 }
 
 export default function ReviewCard({
@@ -22,7 +23,8 @@ export default function ReviewCard({
     avatar,
     initial,
     bgColor = 'bg-[#3E1C1A]',
-    rotation = ''
+    rotation = '',
+    locale = 'en'
 }: ReviewCardProps) {
     return (
         <div className={`relative bg-white p-6 rounded-3xl shadow-lg hover:shadow-2xl border border-gray-100 min-w-[320px] max-w-[380px] transition-all duration-300 ${rotation}`}>
@@ -65,7 +67,13 @@ export default function ReviewCard({
                     </div>
 
                     {/* Date */}
-                    <span className="text-xs text-gray-500 font-medium -mt-1">{date}</span>
+                    <span className="text-xs text-gray-500 font-medium -mt-1">
+                        {new Date(date).toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        })}
+                    </span>
                 </div>
             </div>
 
@@ -74,8 +82,7 @@ export default function ReviewCard({
                 {text}
             </p>
 
-            {/* Speech bubble tail - bottom LEFT (below avatar) */}
-            <div className="absolute -bottom-3 left-6 w-6 h-6 bg-white border-l border-b border-gray-100 transform rotate-45 rounded-bl-md shadow-sm"></div>
+
         </div>
     );
 }

@@ -5,39 +5,56 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface BookingCalendarProps {
     onCheckAvailability?: () => void;
+    onContact?: () => void;
+    lang?: string;
+    dict?: any;
 }
 
-export default function BookingCalendar({ onCheckAvailability }: BookingCalendarProps) {
-    const [currentDate] = useState(new Date('2025-05-01')); // Hardcoded to match design May 2025
-    const [selectedDate, setSelectedDate] = useState<number | null>(7);
+export default function BookingCalendar({ onCheckAvailability, onContact, lang = 'en', dict }: BookingCalendarProps) {
+    const t = dict?.booking_calendar || {};
+    const [currentDate, setCurrentDate] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState<number | null>(null);
 
-    // Generate calendar days for May 2025
-    // May 1st 2025 is a Thursday
-    const days = [];
-    // Empty slots for Mon, Tue, Wed
-    for (let i = 0; i < 3; i++) days.push(null);
-    // Days 1-31
-    for (let i = 1; i <= 31; i++) days.push(i);
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    // 0=Sun..6=Sat → convert to Mon-start (0=Mon..6=Sun)
+    const firstDay = new Date(year, month, 1).getDay();
+    const emptySlots = firstDay === 0 ? 6 : firstDay - 1;
+
+    const days: (number | null)[] = [];
+    for (let i = 0; i < emptySlots; i++) days.push(null);
+    for (let i = 1; i <= daysInMonth; i++) days.push(i);
+
+    const locale = lang === 'fr' ? 'fr-FR' : 'en-US';
+    const monthLabel = currentDate.toLocaleDateString(locale, { month: 'long', year: 'numeric' });
+
+    const weekdays = t.weekdays || ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
     return (
         <div className="bg-white rounded-[2rem] p-6 shadow-xl w-full max-w-sm mx-auto border border-gray-100">
             {/* Calendar Header */}
             <div className="flex items-center justify-between mb-6">
-                <button className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-400 hover:text-gray-600 hover:border-gray-400 transition-colors">
+                <button
+                    onClick={() => setCurrentDate(new Date(year, month - 1, 1))}
+                    className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-400 hover:text-gray-600 hover:border-gray-400 transition-colors"
+                >
                     <ChevronLeft size={16} strokeWidth={2} />
                 </button>
-                <div className="flex gap-4 text-base font-bold text-gray-800">
-                    <span>May</span>
-                    <span>2025</span>
+                <div className="text-base font-bold text-gray-800 capitalize">
+                    {monthLabel}
                 </div>
-                <button className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-400 hover:text-gray-600 hover:border-gray-400 transition-colors">
+                <button
+                    onClick={() => setCurrentDate(new Date(year, month + 1, 1))}
+                    className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-400 hover:text-gray-600 hover:border-gray-400 transition-colors"
+                >
                     <ChevronRight size={16} strokeWidth={2} />
                 </button>
             </div>
 
             {/* Week Days */}
             <div className="grid grid-cols-7 mb-4">
-                {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day) => (
+                {weekdays.map((day: string) => (
                     <div key={day} className="text-center text-[10px] font-medium text-gray-500 uppercase tracking-wide">
                         {day}
                     </div>
@@ -71,10 +88,13 @@ export default function BookingCalendar({ onCheckAvailability }: BookingCalendar
                     onClick={onCheckAvailability}
                     className="w-full bg-[#5D9B38] hover:bg-[#4a802a] text-white font-bold py-3 rounded-lg uppercase text-sm tracking-wide shadow-lg hover:shadow-xl transition-all active:scale-[0.98]"
                 >
-                    check availability
+                    {t.check_availability || 'Check Availability'}
                 </button>
-                <button className="w-full bg-[#3B41E3] hover:bg-[#2f34b9] text-white font-bold py-3 rounded-lg uppercase text-sm tracking-wide shadow-lg hover:shadow-xl transition-all active:scale-[0.98]">
-                    CONTACT
+                <button
+                    onClick={onContact}
+                    className="w-full bg-[#3B41E3] hover:bg-[#2f34b9] text-white font-bold py-3 rounded-lg uppercase text-sm tracking-wide shadow-lg hover:shadow-xl transition-all active:scale-[0.98]"
+                >
+                    {t.contact || 'Contact'}
                 </button>
             </div>
         </div>

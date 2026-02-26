@@ -4,34 +4,38 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { CreditCard, MapPin, Calendar, Users } from 'lucide-react';
 
-const features = [
-    {
-        icon: CreditCard,
-        title: 'Competitive Pricing',
-        description: "Adventure doesn't have to break the bank",
-        gradient: 'from-red-50 to-orange-50'
-    },
-    {
-        icon: MapPin,
-        title: 'Worldwide Coverage',
-        description: "Wherever you dream of flying, we'll take you there",
-        gradient: 'from-orange-50 to-amber-50'
-    },
-    {
-        icon: Calendar,
-        title: 'Fast Booking',
-        description: 'book your flight in minutes and get ready to soar.',
-        gradient: 'from-amber-50 to-yellow-50'
-    },
-    {
-        icon: Users,
-        title: 'Guided Tours',
-        description: 'our expert pilots guide you safely through the skies.',
-        gradient: 'from-yellow-50 to-orange-50'
-    }
-];
+interface WhyChooseSectionProps {
+    dict: any;
+}
 
-const WhyChooseSection = () => {
+const WhyChooseSection = ({ dict }: WhyChooseSectionProps) => {
+    const features = [
+        {
+            icon: CreditCard,
+            title: dict.why_choose.pricing.title,
+            description: dict.why_choose.pricing.desc,
+            gradient: 'from-red-50 to-orange-50'
+        },
+        {
+            icon: MapPin,
+            title: dict.why_choose.coverage.title,
+            description: dict.why_choose.coverage.desc,
+            gradient: 'from-orange-50 to-amber-50'
+        },
+        {
+            icon: Calendar,
+            title: dict.why_choose.booking.title,
+            description: dict.why_choose.booking.desc,
+            gradient: 'from-amber-50 to-yellow-50'
+        },
+        {
+            icon: Users,
+            title: dict.why_choose.guides.title,
+            description: dict.why_choose.guides.desc,
+            gradient: 'from-yellow-50 to-orange-50'
+        }
+    ];
+
     return (
         <section className="py-12 xs:py-14 sm:py-16 md:py-20 lg:py-24 bg-white relative overflow-hidden">
             {/* Background Decoration */}
@@ -52,10 +56,10 @@ const WhyChooseSection = () => {
                     className="text-center mb-10 xs:mb-12 sm:mb-14 md:mb-16 lg:mb-20"
                 >
                     <h3 className="font-script text-[#C04000] text-xl xs:text-2xl sm:text-3xl md:text-4xl mb-2 sm:mb-3">
-                        Brilliant Reasons
+                        {dict.why_choose.subtitle}
                     </h3>
                     <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#C04000] mb-4 sm:mb-6">
-                        Why Choose Us
+                        {dict.why_choose.title}
                     </h2>
                 </motion.div>
 

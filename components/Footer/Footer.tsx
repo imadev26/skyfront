@@ -2,9 +2,34 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { Facebook, Instagram, Phone, Mail, MapPin } from 'lucide-react';
 
-export default function Footer() {
+interface FooterProps {
+    lang?: string;
+    dict?: any;
+}
+
+export default function Footer({ lang = 'en', dict }: FooterProps) {
+    const pathname = usePathname();
+
+    // Hide Footer on Admin pages
+    if (pathname && pathname.includes('/admin')) return null;
+
+    // Safe fallback
+    const t = dict?.footer || {
+        description: "The premier hot air balloon adventure in Marrakech.",
+        quick_links: "Quick Links",
+        contact_us: "Contact Us",
+        follow_us: "Follow Us",
+        rights: "All rights reserved.",
+        privacy: "Privacy Policy",
+        terms: "Terms of Service",
+        social_desc: "Stay updated with our latest offers and sky adventures.",
+        nav: { home: 'Home', flights: 'Our Flights', about: 'About Us', book_now: 'Book Now' },
+        labels: { address: 'Address', email: 'Email', phone: 'Phone' }
+    };
+
     return (
         <footer id="contact" className="bg-[#1a2632] text-white pt-20 pb-10 font-sans relative z-10 before:hidden after:hidden border-t-[6px] border-[#F27A23] outline-none -mt-1" style={{ backgroundImage: 'none' }}>
             <div className="container mx-auto px-6">
@@ -22,33 +47,33 @@ export default function Footer() {
                             />
                         </div>
                         <p className="text-gray-300 text-sm leading-relaxed">
-                            Elevate your senses with Sky Experience. The premier hot air balloon adventure in Marrakech. Discover the Red City like never before.
+                            {t.description}
                         </p>
                     </div>
 
                     {/* 2. Quick Links */}
                     <div className="flex flex-col">
-                        <h3 className="font-bold text-lg mb-6 text-[#F27A23] uppercase tracking-wider">Quick Links</h3>
+                        <h3 className="font-bold text-lg mb-6 text-[#F27A23] uppercase tracking-wider">{t.quick_links}</h3>
                         <ul className="space-y-4">
-                            <li><Link href="/" className="text-gray-300 hover:text-white hover:translate-x-2 transition-all flex items-center gap-2">Home</Link></li>
-                            <li><Link href="#vols" className="text-gray-300 hover:text-white hover:translate-x-2 transition-all flex items-center gap-2">Our Flights</Link></li>
-                            <li><Link href="#about" className="text-gray-300 hover:text-white hover:translate-x-2 transition-all flex items-center gap-2">About Us</Link></li>
-                            <li><Link href="/booking" className="text-gray-300 hover:text-white hover:translate-x-2 transition-all flex items-center gap-2">Book Now</Link></li>
+                            <li><Link href={`/${lang}`} className="text-gray-300 hover:text-white hover:translate-x-2 transition-all flex items-center gap-2">{t.nav?.home || 'Home'}</Link></li>
+                            <li><Link href={`/${lang}/flights`} className="text-gray-300 hover:text-white hover:translate-x-2 transition-all flex items-center gap-2">{t.nav?.flights || 'Our Flights'}</Link></li>
+                            <li><Link href={`/${lang}/about`} className="text-gray-300 hover:text-white hover:translate-x-2 transition-all flex items-center gap-2">{t.nav?.about || 'About Us'}</Link></li>
+                            <li><Link href={`/${lang}/flights?action=book`} className="text-gray-300 hover:text-white hover:translate-x-2 transition-all flex items-center gap-2">{t.nav?.book_now || 'Book Now'}</Link></li>
                         </ul>
                     </div>
 
                     {/* 3. Contact Info */}
                     <div className="flex flex-col">
-                        <h3 className="font-bold text-lg mb-6 text-[#F27A23] uppercase tracking-wider">Contact</h3>
+                        <h3 className="font-bold text-lg mb-6 text-[#F27A23] uppercase tracking-wider">{t.contact_us}</h3>
                         <ul className="space-y-6">
                             <li className="flex items-start gap-4">
                                 <div className="bg-[#FFFFFF]/10 p-2 rounded-lg shrink-0">
                                     <MapPin size={20} className="text-[#F27A23]" />
                                 </div>
                                 <div>
-                                    <span className="block text-xs text-gray-400 uppercase font-bold mb-1">Address</span>
+                                    <span className="block text-xs text-gray-400 uppercase font-bold mb-1">{t.labels?.address || 'Address'}</span>
                                     <p className="text-sm text-white leading-relaxed">
-                                        3ème Étage Bureau N° 16, Angle Bd<br />Moulay Rachid, Marrakech 40000
+                                        {t.address_value}
                                     </p>
                                 </div>
                             </li>
@@ -57,9 +82,9 @@ export default function Footer() {
                                     <Mail size={20} className="text-[#F27A23]" />
                                 </div>
                                 <div>
-                                    <span className="block text-xs text-gray-400 uppercase font-bold mb-1">Email</span>
-                                    <a href="mailto:contact@skyexperience-marrakech.com" className="text-sm text-white hover:text-[#F27A23] transition-colors">
-                                        contact@skyexperience-marrakech.com
+                                    <span className="block text-xs text-gray-400 uppercase font-bold mb-1">{t.labels?.email || 'Email'}</span>
+                                    <a href={`mailto:${t.email_value}`} className="text-sm text-white hover:text-[#F27A23] transition-colors">
+                                        {t.email_value}
                                     </a>
                                 </div>
                             </li>
@@ -68,9 +93,9 @@ export default function Footer() {
                                     <Phone size={20} className="text-[#F27A23]" />
                                 </div>
                                 <div>
-                                    <span className="block text-xs text-gray-400 uppercase font-bold mb-1">Phone</span>
-                                    <a href="tel:+212661445327" className="text-sm text-white font-bold hover:text-[#F27A23] transition-colors">
-                                        +212 661 445 327
+                                    <span className="block text-xs text-gray-400 uppercase font-bold mb-1">{t.labels?.phone || 'Phone'}</span>
+                                    <a href={`tel:${(t.phone_value || '').replace(/\s/g, '')}`} className="text-sm text-white font-bold hover:text-[#F27A23] transition-colors">
+                                        {t.phone_value}
                                     </a>
                                 </div>
                             </li>
@@ -79,9 +104,9 @@ export default function Footer() {
 
                     {/* 4. Social & Newsletter */}
                     <div className="flex flex-col">
-                        <h3 className="font-bold text-lg mb-6 text-[#F27A23] uppercase tracking-wider">Follow Us</h3>
+                        <h3 className="font-bold text-lg mb-6 text-[#F27A23] uppercase tracking-wider">{t.follow_us}</h3>
                         <p className="text-gray-300 text-sm mb-6">
-                            Stay updated with our latest offers and sky adventures.
+                            {t.social_desc || 'Stay updated with our latest offers and sky adventures.'}
                         </p>
                         <div className="flex gap-4">
                             <a href="#" className="bg-[#FFFFFF]/10 hover:bg-[#F27A23] text-white p-3 rounded-full transition-all duration-300 transform hover:-translate-y-1">
@@ -98,11 +123,11 @@ export default function Footer() {
                 {/* Bottom Bar: Copyright */}
                 <div className="pt-8 flex flex-col md:flex-row justify-between items-center gap-4 mt-8 border-t border-white/10">
                     <p className="text-gray-400 text-sm text-center md:text-left">
-                        © {new Date().getFullYear()} Sky Experience. All rights reserved.
+                        © {new Date().getFullYear()} Sky Experience. {t.rights}
                     </p>
                     <div className="flex gap-6 text-sm text-gray-400">
-                        <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
-                        <Link href="#" className="hover:text-white transition-colors">Terms of Service</Link>
+                        <Link href="/privacy" className="hover:text-white transition-colors">{t.privacy || 'Privacy Policy'}</Link>
+                        <Link href="/terms" className="hover:text-white transition-colors">{t.terms || 'Terms of Service'}</Link>
                     </div>
                 </div>
             </div>

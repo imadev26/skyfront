@@ -4,7 +4,11 @@ import React from 'react';
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-export default function PanoramicSection() {
+interface PanoramicSectionProps {
+    dict: any;
+}
+
+export default function PanoramicSection({ dict }: PanoramicSectionProps) {
     return (
         <section className="relative w-full py-20 bg-white overflow-hidden">
             <div className="container mx-auto px-4 max-w-7xl">
@@ -19,14 +23,13 @@ export default function PanoramicSection() {
                         transition={{ duration: 0.6 }}
                     >
                         <h2 className="text-4xl md:text-5xl font-extrabold text-black mb-4">
-                            Panoramic Views
+                            {dict.panoramic.title}
                         </h2>
                         <h3 className="text-lg md:text-xl font-bold text-[#1a2632] mb-6">
-                            Marrakech from Above
+                            {dict.panoramic.subtitle}
                         </h3>
                         <p className="text-gray-500 leading-relaxed text-sm md:text-base">
-                            Soar over the Red City and beyond in our safe and comfortable hot-air balloons.
-                            Each flight is a new masterpiece painted by the sky.
+                            {dict.panoramic.desc}
                         </p>
                     </motion.div>
 

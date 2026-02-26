@@ -45,11 +45,17 @@ export interface CancellationPolicy {
 export interface Flight {
     // Core Identifiers
     id: string;
+    _id?: string;
     slug: string; // URL-friendly identifier
+    slug_fr?: string;
 
     // Basic Information
     title: string;
-    description: string;
+    title_fr?: string;
+    description?: string; // Legacy, prefer overview
+    description_fr?: string;
+    overview: string;
+    overview_fr?: string;
 
     // Pricing
     price: number;
@@ -78,20 +84,36 @@ export interface Flight {
 
     // Content
     highlights: string[];
+    highlights_fr?: string[];
     included: string[];
+    included_fr?: string[];
     excluded: string[];
+    excluded_fr?: string[];
 
     // Features
     features: {
         icon: 'car' | 'safety' | 'clock' | 'coffee' | 'camera';
         title: string;
+        title_fr?: string;
         description: string;
+        description_fr?: string;
     }[];
 
     // Policies & Requirements
     requirements?: FlightRequirements;
     cancellationPolicy?: CancellationPolicy;
     weatherPolicy?: string;
+
+    // Backend compatibility
+    mainImage?: string;
+    // Itinerary
+    program?: {
+        time?: string;
+        title: string;
+        title_fr?: string;
+        description: string;
+        description_fr?: string;
+    }[];
 
     // Status & Availability
     status: FlightStatus;
@@ -104,7 +126,9 @@ export interface Flight {
 
     // SEO
     metaDescription?: string;
+    metaDescription_fr?: string;
     metaKeywords?: string[];
+    metaKeywords_fr?: string[];
 
     // Timestamps (ISO 8601 format)
     createdAt: string;
@@ -139,7 +163,11 @@ export const FLIGHTS: Flight[] = [
         id: 'royal',
         slug: 'royal-hot-air-balloon-flight',
         title: 'Royal Hot-Air Balloon Flight',
+        title_fr: 'Vol Royal en Montgolfière',
         description: 'Experience the magic of floating above the Moroccan landscape with the Royal Hot Air Balloon Flight offered by Sky Experience. This one-hour exclusive royal flight unveils breathtaking views of the Atlas Mountains, desert, and Berber villages. Perfect for travelers seeking an unique perspective of Marrakech\'s beauty combined with luxury, culture, and adventure into one unforgettable morning.',
+        description_fr: 'Vivez la magie de flotter au-dessus du paysage marocain avec le Vol Royal en Montgolfière offert par Sky Experience. Ce vol exclusif d\'une heure dévoile des vues imprenables sur les montagnes de l\'Atlas, le désert et les villages berbères. Parfait pour les voyageurs cherchant une perspective unique de la beauté de Marrakech combinée au luxe, à la culture et à l\'aventure en une matinée inoubliable.',
+        overview: 'Experience the magic of floating above the Moroccan landscape with the Royal Hot Air Balloon Flight offered by Sky Experience. This one-hour exclusive royal flight unveils breathtaking views of the Atlas Mountains, desert, and Berber villages. Perfect for travelers seeking an unique perspective of Marrakech\'s beauty combined with luxury, culture, and adventure into one unforgettable morning.',
+        overview_fr: 'Vivez la magie de flotter au-dessus du paysage marocain avec le Vol Royal en Montgolfière offert par Sky Experience. Ce vol exclusif d\'une heure dévoile des vues imprenables sur les montagnes de l\'Atlas, le désert et les villages berbères. Parfait pour les voyageurs cherchant une perspective unique de la beauté de Marrakech combinée au luxe, à la culture et à l\'aventure en une matinée inoubliable.',
         price: 550,
         currency: '$',
         seasonalPricing: [
@@ -164,6 +192,12 @@ export const FLIGHTS: Flight[] = [
             'Personalized ceremony with Amazigh calligraphy',
             'Safe and professional service from an internationally recognized operator'
         ],
+        highlights_fr: [
+            'Vues imprenables au lever du soleil sur la campagne de Marrakech',
+            'Montgolfière intime avec pilote privé certifié',
+            'Cérémonie personnalisée avec calligraphie Amazigh',
+            'Service sûr et professionnel d\'un opérateur reconnu internationalement'
+        ],
         included: [
             'Roundtrip transportation from Marrakech hotels',
             'Welcome tea and refreshments upon arrival',
@@ -172,6 +206,14 @@ export const FLIGHTS: Flight[] = [
             'Traditional Moroccan breakfast post flight',
             'Personalized flight certificate'
         ],
+        included_fr: [
+            'Transport aller-retour depuis les hôtels de Marrakech',
+            'Thé de bienvenue et rafraîchissements à l\'arrivée',
+            'Briefing de sécurité professionnel par un pilote certifié',
+            'Démonstration complète du montage et gonflage du ballon',
+            'Petit-déjeuner marocain traditionnel après le vol',
+            'Certificat de vol personnalisé'
+        ],
         excluded: [
             'Hotel accommodation',
             'Travel insurance',
@@ -179,26 +221,41 @@ export const FLIGHTS: Flight[] = [
             'Additional activities or tours',
             'Gratuities'
         ],
+        excluded_fr: [
+            'Hébergement à l\'hôtel',
+            'Assurance voyage',
+            'Dépenses personnelles',
+            'Activités ou visites supplémentaires',
+            'Pourboires'
+        ],
         features: [
             {
                 icon: 'car',
                 title: 'Transport',
-                description: 'VIP private transport from your hotel or riad.'
+                title_fr: 'Transport',
+                description: 'VIP private transport from your hotel or riad.',
+                description_fr: 'Transport privé VIP depuis votre hôtel ou riad.'
             },
             {
                 icon: 'safety',
                 title: 'Safety Briefing',
-                description: 'Private safety briefing by one of our most experienced pilots.'
+                title_fr: 'Briefing Sécurité',
+                description: 'Private safety briefing by one of our most experienced pilots.',
+                description_fr: 'Briefing de sécurité privé par l\'un de nos pilotes les plus expérimentés.'
             },
             {
                 icon: 'clock',
                 title: '1 Hour Flight',
-                description: 'A one-hour exclusive royal flight offering breathtaking views of the Atlas Mountains, desert, and Berber villages.'
+                title_fr: 'Vol d\'1 Heure',
+                description: 'A one-hour exclusive royal flight offering breathtaking views of the Atlas Mountains, desert, and Berber villages.',
+                description_fr: 'Un vol royal exclusif d\'une heure offrant des vues imprenables sur les montagnes de l\'Atlas, le désert et les villages berbères.'
             },
             {
                 icon: 'coffee',
                 title: 'Breakfast',
-                description: 'Gourmet breakfast served on board, featuring refined delicacies and Moroccan specialties.'
+                title_fr: 'Petit-déjeuner',
+                description: 'Gourmet breakfast served on board, featuring refined delicacies and Moroccan specialties.',
+                description_fr: 'Petit-déjeuner gastronomique servi à bord, comprenant des mets raffinés et des spécialités marocaines.'
             }
         ],
         requirements: {
@@ -215,7 +272,9 @@ export const FLIGHTS: Flight[] = [
         rating: 4.9,
         reviewCount: 127,
         metaDescription: 'Experience luxury with our Royal Hot Air Balloon Flight over Marrakech. Exclusive private flight with gourmet breakfast and stunning Atlas Mountain views.',
+        metaDescription_fr: 'Vivez le luxe avec notre Vol Royal en Montgolfière à Marrakech. Vol privé exclusif avec petit-déjeuner gastronomique et vues imprenables sur l\'Atlas.',
         metaKeywords: ['royal balloon flight', 'luxury marrakech', 'private hot air balloon', 'vip flight morocco'],
+        metaKeywords_fr: ['vol royal montgolfière', 'luxe marrakech', 'montgolfière privée', 'vol vip maroc'],
         createdAt: '2024-01-15T10:00:00Z',
         updatedAt: '2025-02-10T14:30:00Z'
     },
@@ -223,7 +282,11 @@ export const FLIGHTS: Flight[] = [
         id: 'top-vip',
         slug: 'top-vip-private-hot-air-balloon-flight',
         title: 'Top VIP Private Hot Air Balloon Flight',
+        title_fr: 'Vol Montgolfière Privé Top VIP',
         description: 'Indulge in the most luxurious way to experience the skies over Marrakech with the Top VIP Private Hot Air Balloon Flight, offered exclusively by Sky Experience. Perfect for travelers seeking an unique perspective of Marrakech\'s beauty combined with luxury, culture, and adventure into one unforgettable morning.',
+        description_fr: 'Offrez-vous la manière la plus luxueuse de découvrir le ciel de Marrakech avec le Vol Montgolfière Privé Top VIP, proposé exclusivement par Sky Experience. Parfait pour les voyageurs cherchant une perspective unique de la beauté de Marrakech combinée au luxe, à la culture et à l\'aventure en une matinée inoubliable.',
+        overview: 'Indulge in the most luxurious way to experience the skies over Marrakech with the Top VIP Private Hot Air Balloon Flight, offered exclusively by Sky Experience. Perfect for travelers seeking an unique perspective of Marrakech\'s beauty combined with luxury, culture, and adventure into one unforgettable morning.',
+        overview_fr: 'Offrez-vous la manière la plus luxueuse de découvrir le ciel de Marrakech avec le Vol Montgolfière Privé Top VIP, proposé exclusivement par Sky Experience. Parfait pour les voyageurs cherchant une perspective unique de la beauté de Marrakech combinée au luxe, à la culture et à l\'aventure en une matinée inoubliable.',
         price: 495,
         currency: '$',
         image: '/images/private-main.png',
@@ -244,6 +307,12 @@ export const FLIGHTS: Flight[] = [
             'Personalized ceremony with Amazigh calligraphy',
             'Safe and professional service from certified pilots'
         ],
+        highlights_fr: [
+            'Vues imprenables au lever du soleil sur la campagne de Marrakech',
+            'Montgolfière privée exclusive pour votre groupe',
+            'Cérémonie personnalisée avec calligraphie Amazigh',
+            'Service sûr et professionnel de pilotes certifiés'
+        ],
         included: [
             'Private 4x4 transport from Marrakech hotels',
             'Professional safety briefing by certified pilot',
@@ -251,16 +320,29 @@ export const FLIGHTS: Flight[] = [
             'Berber breakfast in traditional tent',
             'Personalized flight certificate'
         ],
+        included_fr: [
+            'Transport privé en 4x4 depuis les hôtels de Marrakech',
+            'Briefing de sécurité professionnel par un pilote certifié',
+            'Démonstration complète du montage du ballon',
+            'Petit-déjeuner berbère sous tente traditionnelle',
+            'Certificat de vol personnalisé'
+        ],
         excluded: [
             'Hotel accommodation',
             'Travel insurance',
             'Personal expenses',
             'Additional activities or tours'
         ],
+        excluded_fr: [
+            'Hébergement à l\'hôtel',
+            'Assurance voyage',
+            'Dépenses personnelles',
+            'Activités ou visites supplémentaires'
+        ],
         features: [
-            { icon: 'car', title: 'Private Transport', description: 'Exclusive 4x4 transport.' },
-            { icon: 'coffee', title: 'Breakfast', description: 'Berber breakfast in a traditional tent.' },
-            { icon: 'clock', title: '1 Hour Flight', description: 'Private flight for you and your group.' }
+            { icon: 'car', title: 'Private Transport', title_fr: 'Transport Privé', description: 'Exclusive 4x4 transport.', description_fr: 'Transport exclusif en 4x4.' },
+            { icon: 'coffee', title: 'Breakfast', title_fr: 'Petit-déjeuner', description: 'Berber breakfast in a traditional tent.', description_fr: 'Petit-déjeuner berbère sous tente traditionnelle.' },
+            { icon: 'clock', title: '1 Hour Flight', title_fr: 'Vol d\'1 Heure', description: 'Private flight for you and your group.', description_fr: 'Vol privé pour vous et votre groupe.' }
         ],
         cancellationPolicy: DEFAULT_CANCELLATION_POLICY,
         weatherPolicy: DEFAULT_WEATHER_POLICY,
@@ -270,7 +352,9 @@ export const FLIGHTS: Flight[] = [
         rating: 4.8,
         reviewCount: 94,
         metaDescription: 'Book a Top VIP Private Hot Air Balloon Flight in Marrakech. Exclusive balloon for your group with Berber breakfast and stunning views.',
+        metaDescription_fr: 'Réservez un Vol Montgolfière Privé Top VIP à Marrakech. Montgolfière exclusive pour votre groupe avec petit-déjeuner berbère et vues imprenables.',
         metaKeywords: ['vip private balloon', 'group balloon flight', 'marrakech private tour'],
+        metaKeywords_fr: ['montgolfière privée vip', 'vol montgolfière groupe', 'tour privé marrakech'],
         createdAt: '2024-01-20T09:00:00Z',
         updatedAt: '2025-02-08T11:15:00Z'
     },
@@ -278,7 +362,11 @@ export const FLIGHTS: Flight[] = [
         id: 'vip',
         slug: 'vip-hot-air-balloon-flight',
         title: 'VIP Hot Air Balloon Flight',
+        title_fr: 'Vol Montgolfière VIP',
         description: 'Experience an unforgettable hot air balloon adventure over Marrakech with our VIP Flight. Enjoy comfortable shared transport, stunning aerial views of the Atlas Mountains and Berber villages, followed by a traditional Moroccan breakfast.',
+        description_fr: 'Vivez une aventure inoubliable en montgolfière au-dessus de Marrakech avec notre Vol VIP. Profitez d\'un transport partagé confortable, de vues aériennes imprenables sur les montagnes de l\'Atlas et les villages berbères, suivies d\'un petit-déjeuner marocain traditionnel.',
+        overview: 'Experience an unforgettable hot air balloon adventure over Marrakech with our VIP Flight. Enjoy comfortable shared transport, stunning aerial views of the Atlas Mountains and Berber villages, followed by a traditional Moroccan breakfast.',
+        overview_fr: 'Vivez une aventure inoubliable en montgolfière au-dessus de Marrakech avec notre Vol VIP. Profitez d\'un transport partagé confortable, de vues aériennes imprenables sur les montagnes de l\'Atlas et les villages berbères, suivies d\'un petit-déjeuner marocain traditionnel.',
         price: 315,
         currency: '$',
         image: '/images/hotair.png',
@@ -299,6 +387,12 @@ export const FLIGHTS: Flight[] = [
             'Traditional Moroccan breakfast',
             'Flight certificate included'
         ],
+        highlights_fr: [
+            'Vues imprenables au lever du soleil sur Marrakech',
+            'Montgolfière partagée avec pilote certifié',
+            'Petit-déjeuner marocain traditionnel',
+            'Certificat de vol inclus'
+        ],
         included: [
             'Shared minibus transport from hotels',
             'Welcome tea upon arrival',
@@ -306,16 +400,29 @@ export const FLIGHTS: Flight[] = [
             'Traditional breakfast after landing',
             'Flight certificate'
         ],
+        included_fr: [
+            'Transport en minibus partagé depuis les hôtels',
+            'Thé de bienvenue à l\'arrivée',
+            'Briefing de sécurité par un pilote certifié',
+            'Petit-déjeuner traditionnel après l\'atterrissage',
+            'Certificat de vol'
+        ],
         excluded: [
             'Hotel accommodation',
             'Travel insurance',
             'Personal expenses',
             'Gratuities'
         ],
+        excluded_fr: [
+            'Hébergement à l\'hôtel',
+            'Assurance voyage',
+            'Dépenses personnelles',
+            'Pourboires'
+        ],
         features: [
-            { icon: 'car', title: 'Shared Transport', description: 'Comfortable minibus transport.' },
-            { icon: 'coffee', title: 'Breakfast', description: 'Traditional breakfast after landing.' },
-            { icon: 'clock', title: '1 Hour Flight', description: 'Shared flight with other passengers.' }
+            { icon: 'car', title: 'Shared Transport', title_fr: 'Transport Partagé', description: 'Comfortable minibus transport.', description_fr: 'Transport confortable en minibus.' },
+            { icon: 'coffee', title: 'Breakfast', title_fr: 'Petit-déjeuner', description: 'Traditional breakfast after landing.', description_fr: 'Petit-déjeuner traditionnel après l\'atterrissage.' },
+            { icon: 'clock', title: '1 Hour Flight', title_fr: 'Vol d\'1 Heure', description: 'Shared flight with other passengers.', description_fr: 'Vol partagé avec d\'autres passagers.' }
         ],
         cancellationPolicy: DEFAULT_CANCELLATION_POLICY,
         weatherPolicy: DEFAULT_WEATHER_POLICY,
@@ -325,7 +432,9 @@ export const FLIGHTS: Flight[] = [
         rating: 4.7,
         reviewCount: 156,
         metaDescription: 'VIP Hot Air Balloon Flight in Marrakech with traditional breakfast. Affordable luxury balloon experience over Atlas Mountains.',
+        metaDescription_fr: 'Vol Montgolfière VIP à Marrakech avec petit-déjeuner traditionnel. Expérience de luxe abordable au-dessus de l\'Atlas.',
         metaKeywords: ['vip balloon marrakech', 'shared balloon flight', 'affordable balloon tour'],
+        metaKeywords_fr: ['montgolfière vip marrakech', 'vol partagé montgolfière', 'tour montgolfière abordable'],
         createdAt: '2024-02-01T08:00:00Z',
         updatedAt: '2025-02-05T16:45:00Z'
     },
@@ -333,7 +442,11 @@ export const FLIGHTS: Flight[] = [
         id: 'classic',
         slug: 'classic-hot-air-balloon-flight',
         title: 'Classic Hot Air Balloon Flight',
+        title_fr: 'Vol Montgolfière Classique',
         description: 'Experience the magic of floating above the Moroccan landscape with the Classic Hot Air Balloon Flight. This 40-60 minute flight unveils breathtaking views of the Atlas Mountains, desert, and Berber villages at an affordable price.',
+        description_fr: 'Vivez la magie de flotter au-dessus du paysage marocain avec le Vol Montgolfière Classique. Ce vol de 40 à 60 minutes dévoile des vues imprenables sur les montagnes de l\'Atlas, le désert et les villages berbères à un prix abordable.',
+        overview: 'Experience the magic of floating above the Moroccan landscape with the Classic Hot Air Balloon Flight. This 40-60 minute flight unveils breathtaking views of the Atlas Mountains, desert, and Berber villages at an affordable price.',
+        overview_fr: 'Vivez la magie de flotter au-dessus du paysage marocain avec le Vol Montgolfière Classique. Ce vol de 40 à 60 minutes dévoile des vues imprenables sur les montagnes de l\'Atlas, le désert et les villages berbères à un prix abordable.',
         price: 205,
         currency: '$',
         image: '/images/classic-main.png',
@@ -354,22 +467,39 @@ export const FLIGHTS: Flight[] = [
             'Traditional Moroccan tea',
             'Safety briefing included'
         ],
+        highlights_fr: [
+            'Magnifiques vues au lever du soleil sur Marrakech',
+            'Montgolfière partagée avec pilote certifié',
+            'Thé marocain traditionnel',
+            'Briefing de sécurité inclus'
+        ],
         included: [
             'Roundtrip transportation from hotels',
             'Safety briefing by certified pilot',
             'Traditional Moroccan tea upon landing',
             'Flight certificate'
         ],
+        included_fr: [
+            'Transport aller-retour depuis les hôtels',
+            'Briefing de sécurité par un pilote certifié',
+            'Thé marocain traditionnel à l\'atterrissage',
+            'Certificat de vol'
+        ],
         excluded: [
             'Hotel accommodation',
             'Travel insurance',
             'Personal expenses'
         ],
+        excluded_fr: [
+            'Hébergement à l\'hôtel',
+            'Assurance voyage',
+            'Dépenses personnelles'
+        ],
         features: [
-            { icon: 'car', title: 'Transport', description: 'Standard transport included.' },
-            { icon: 'coffee', title: 'Tea', description: 'Moroccan tea served upon landing.' },
-            { icon: 'clock', title: '40-60 Min Flight', description: 'Standard duration flight.' },
-            { icon: 'safety', title: 'Safety First', description: 'Full safety briefing and equipment check before flight.' }
+            { icon: 'car', title: 'Transport', title_fr: 'Transport', description: 'Standard transport included.', description_fr: 'Transport standard inclus.' },
+            { icon: 'coffee', title: 'Tea', title_fr: 'Thé', description: 'Moroccan tea served upon landing.', description_fr: 'Thé marocain servi à l\'atterrissage.' },
+            { icon: 'clock', title: '40-60 Min Flight', title_fr: 'Vol 40-60 Min', description: 'Standard duration flight.', description_fr: 'Vol de durée standard.' },
+            { icon: 'safety', title: 'Safety First', title_fr: 'Sécurité Avant Tout', description: 'Full safety briefing and equipment check before flight.', description_fr: 'Briefing complet et vérification de l\'équipement avant le vol.' }
         ],
         cancellationPolicy: DEFAULT_CANCELLATION_POLICY,
         weatherPolicy: DEFAULT_WEATHER_POLICY,
@@ -379,7 +509,9 @@ export const FLIGHTS: Flight[] = [
         rating: 4.6,
         reviewCount: 243,
         metaDescription: 'Affordable Classic Hot Air Balloon Flight in Marrakech. Experience stunning Atlas Mountain views at budget-friendly prices.',
+        metaDescription_fr: 'Vol Montgolfière Classique abordable à Marrakech. Profitez de vues imprenables sur l\'Atlas à petit prix.',
         metaKeywords: ['classic balloon flight', 'affordable marrakech balloon', 'budget balloon tour'],
+        metaKeywords_fr: ['vol montgolfière classique', 'montgolfière marrakech pas cher', 'tour ballon budget'],
         createdAt: '2024-01-10T07:00:00Z',
         updatedAt: '2025-02-12T09:20:00Z'
     }

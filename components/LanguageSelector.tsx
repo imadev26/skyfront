@@ -1,21 +1,19 @@
 'use client';
 
+import { usePathname, useRouter } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
-import { ChevronDown, Check, Globe } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-
-const languages = [
-    { code: 'EN', name: 'English', flag: '🇬🇧' },
-    { code: 'FR', name: 'Français', flag: '🇫🇷' },
-    { code: 'AR', name: 'العربية', flag: '🇲🇦' },
-];
+import { useLanguageSlug } from '../context/LanguageSlugContext';
+import { Globe, ChevronDown } from 'lucide-react';
 
 export default function LanguageSelector() {
+    const pathname = usePathname();
+    const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
-    const [selected, setSelected] = useState(languages[0]);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
-    // Close on click outside
+    // Get current language from URL (first segment)
+    const currentLang = pathname.split('/')[1] === 'fr' ? 'fr' : 'en';
+
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -26,48 +24,77 @@ export default function LanguageSelector() {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
+    const languages = [
+        { code: 'en', label: 'English', flag: '🇬🇧' },
+        { code: 'fr', label: 'Français', flag: '🇫🇷' },
+    ];
+
+    const { slugs } = useLanguageSlug();
+
+    const handleLanguageChange = (langCode: string) => {
+        if (langCode === currentLang) {
+            setIsOpen(false);
+            return;
+        }
+
+        // If we have a specific slug for the target language (Blog or Flight)
+        if (slugs && slugs[langCode as 'en' | 'fr']) {
+            // Check if we are on a blog path
+            if (pathname.includes('/blogs/')) {
+                const newPath = `/${langCode}/blogs/${slugs[langCode as 'en' | 'fr']}`;
+                router.push(newPath, { scroll: false });
+                setIsOpen(false);
+                return;
+            }
+
+            // Check if we are on a flight path
+            if (pathname.includes('/flights/')) {
+                const newPath = `/${langCode}/flights/${slugs[langCode as 'en' | 'fr']}`;
+                router.push(newPath, { scroll: false });
+                setIsOpen(false);
+                return;
+            }
+        }
+
+        // Default: Replace the language segment in the URL
+        const segments = pathname.split('/');
+        segments[1] = langCode;
+        const newPath = segments.join('/');
+
+        router.push(newPath, { scroll: false });
+        setIsOpen(false);
+    };
+
+
     return (
         <div className="relative" ref={dropdownRef}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex items-center gap-1.5 text-gray-700 hover:text-[#C04000] font-bold text-sm transition-colors py-2"
+                className="flex items-center gap-1 text-gray-700 hover:text-orange-600 transition-colors font-medium text-sm"
+                aria-label="Select Language"
             >
-                <Globe size={16} />
-                <span>{selected.code}</span>
-                <ChevronDown size={14} className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+                <Globe size={18} />
+                <span className="uppercase">{currentLang}</span>
+                <ChevronDown size={14} className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
             </button>
 
-            <AnimatePresence>
-                {isOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-50 p-1"
-                    >
-                        {languages.map((language) => (
-                            <button
-                                key={language.code} // Error here, should be language.code. Fixing in next step or now if possible. Ah, I see "currency" is typo from copy paste.
-                                onClick={() => {
-                                    setSelected(language);
-                                    setIsOpen(false);
-                                }}
-                                className={`w-full flex items-center justify-between px-4 py-2.5 text-sm rounded-lg transition-colors ${selected.code === language.code
-                                    ? 'bg-orange-50 text-[#C04000] font-bold'
-                                    : 'text-gray-700 hover:bg-gray-50'
-                                    }`}
-                            >
-                                <span className="flex items-center gap-3">
-                                    <span className="text-base">{language.flag}</span>
-                                    <span>{language.name}</span>
-                                </span>
-                                {selected.code === language.code && <Check size={14} />}
-                            </button>
-                        ))}
-                    </motion.div>
-                )}
-            </AnimatePresence>
+            {isOpen && (
+                <div className="absolute top-full right-0 mt-2 w-36 bg-white rounded-lg shadow-xl border border-gray-100 py-1 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                    {languages.map((lang) => (
+                        <button
+                            key={lang.code}
+                            onClick={() => handleLanguageChange(lang.code)}
+                            className={`w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 transition-colors flex items-center justify-between ${currentLang === lang.code ? 'text-orange-600 font-bold bg-orange-50' : 'text-gray-700'
+                                }`}
+                        >
+                            <span className="flex items-center gap-2">
+                                <span className="text-lg">{lang.flag}</span>
+                                {lang.label}
+                            </span>
+                        </button>
+                    ))}
+                </div>
+            )}
         </div>
     );
 }

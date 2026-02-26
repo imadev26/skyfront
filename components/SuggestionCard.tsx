@@ -10,7 +10,7 @@ interface SuggestionCardProps {
     image: string;
     badgeType?: 'most-reserved' | 'vip';
     rating: string;
-    price: string;
+    price: React.ReactNode;
     link: string;
 }
 
