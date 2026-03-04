@@ -129,8 +129,8 @@
             "phone": "Téléphone"
         },
         "address_value": "3ème Étage Bureau N° 16, Angle Bd Moulay Rachid, Marrakech 40000",
-        "email_value": "contact@skyexperience-marrakech.com",
-        "phone_value": "+212 661 445 327"
+        "email_value": "skyexperiencemarrakech@gmail.com",
+        "phone_value": "+212 751 622 180"
     },
     "booking": {
         "title": "Réservez votre Aventure",
@@ -340,7 +340,7 @@
         "card_phone_title": "Téléphone & WhatsApp",
         "card_email_title": "Email",
         "card_location_title": "Localisation",
-        "card_location_value": "Région des Montagnes de l'Atlas, Marrakech, Maroc",
+        "card_location_value": "3ème Étage Bureau N° 16, Angle Bd Moulay Rachid, Marrakech",
         "card_location_link": "Obtenir l'itinéraire",
         "card_hours_title": "Heures d'Ouverture",
         "card_hours_weekdays": "Lun – Sam : 6h00 – 20h00",
@@ -369,8 +369,8 @@
         "card_social_title": "Restez Connecté",
         "card_hours_title": "Heures d'Ouverture",
         "label_address": "Adresse",
-        "address_line1": "Région des Montagnes de l'Atlas",
-        "address_line2": "Marrakech, Maroc",
+        "address_line1": "3ème Étage Bureau N° 16, Angle Bd Moulay Rachid",
+        "address_line2": "Marrakech 40000, Maroc",
         "hours_weekdays": "Lundi – Vendredi",
         "hours_saturday": "Samedi",
         "hours_sunday": "Dimanche",
@@ -378,7 +378,7 @@
         "hours_value_saturday": "6h00 – 20h00",
         "hours_value_sunday": "6h00 – 18h00",
         "map_title": "Notre Emplacement",
-        "map_subtitle": "Notre site de décollage est situé dans la belle campagne près de Marrakech, avec des vues imprenables sur les montagnes de l'Atlas.",
+        "map_subtitle": "Notre bureau est situé au cœur de Marrakech, Angle Bd Moulay Rachid. Venez nous rencontrer pour toute information.",
         "get_directions": "Obtenir l'itinéraire",
         "form_title": "Vous avez une question ?",
         "form_subtitle": "Remplissez le formulaire ci-dessous et nous vous répondrons dans les plus brefs délais.",

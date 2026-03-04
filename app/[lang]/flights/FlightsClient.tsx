@@ -338,10 +338,10 @@ export default function FlightsClient({ lang, dict }: FlightsClientProps) {
                                         {dict.flights_page.help.content}
                                     </p>
                                     <a
-                                        href="tel:+212661445327"
+                                        href="tel:+212751622180"
                                         className="block text-center bg-white text-[#C04000] px-4 py-2.5 rounded-xl font-bold hover:bg-gray-100 transition-colors"
                                     >
-                                        +212 661 445 327
+                                        +212 751 622 180
                                     </a>
                                 </div>
                             </div>

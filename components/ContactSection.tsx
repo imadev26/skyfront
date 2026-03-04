@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send, Clock, ArrowRight } from 'lucide-react';
-import { FaWhatsapp, FaInstagram } from 'react-icons/fa';
+import { FaWhatsapp, FaInstagram, FaFacebook } from 'react-icons/fa';
 import axios from 'axios';
 
 interface ContactSectionProps {
@@ -103,8 +103,8 @@ export default function ContactSection({ dict, lang }: ContactSectionProps) {
                                     <Mail className="text-[#C04000] group-hover:text-white transition-colors" size={20} />
                                 </div>
                                 <h3 className="font-bold text-gray-900 mb-2 text-sm">{c.card_email_title}</h3>
-                                <a href="mailto:contact@skyexperience.com" className="text-gray-600 hover:text-[#C04000] text-sm break-all transition-colors">
-                                    contact@skyexperience.com
+                                <a href="mailto:skyexperiencemarrakech@gmail.com" className="text-gray-600 hover:text-[#C04000] text-sm break-all transition-colors">
+                                    skyexperiencemarrakech@gmail.com
                                 </a>
                             </div>
 
@@ -115,7 +115,7 @@ export default function ContactSection({ dict, lang }: ContactSectionProps) {
                                 </div>
                                 <h3 className="font-bold text-gray-900 mb-2 text-sm">{c.card_location_title}</h3>
                                 <p className="text-gray-600 text-sm">{c.card_location_value}</p>
-                                <a href="https://maps.google.com/?q=31.63,-7.98" target="_blank" rel="noopener noreferrer"
+                                <a href="https://maps.app.goo.gl/t7FfvdK91oPT2wAj6" target="_blank" rel="noopener noreferrer"
                                     className="text-[#C04000] hover:underline text-xs mt-1 block transition-colors">{c.card_location_link}</a>
                             </div>
 
@@ -139,9 +139,13 @@ export default function ContactSection({ dict, lang }: ContactSectionProps) {
                                     className="inline-flex items-center gap-2 bg-white text-[#C04000] px-4 py-2 rounded-full font-bold text-sm hover:bg-gray-100 transition-colors shadow">
                                     <FaWhatsapp size={18} /> WhatsApp
                                 </a>
-                                <a href="https://instagram.com/skyexperience" target="_blank" rel="noopener noreferrer"
+                                <a href="https://www.instagram.com/skyexperience_marrakech" target="_blank" rel="noopener noreferrer"
                                     className="inline-flex items-center gap-2 bg-white/10 border border-white/30 text-white px-4 py-2 rounded-full font-bold text-sm hover:bg-white/20 transition-colors">
                                     <FaInstagram size={18} /> Instagram
+                                </a>
+                                <a href="https://web.facebook.com/profile.php?id=61587155890037" target="_blank" rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-2 bg-white/10 border border-white/30 text-white px-4 py-2 rounded-full font-bold text-sm hover:bg-white/20 transition-colors">
+                                    <FaFacebook size={18} /> Facebook
                                 </a>
                                 <Link href={`/${lang}/contact`}
                                     className="inline-flex items-center gap-2 bg-white/10 border border-white/30 text-white px-4 py-2 rounded-full font-bold text-sm hover:bg-white/20 transition-colors">

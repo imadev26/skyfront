@@ -109,10 +109,10 @@ export default function Footer({ lang = 'en', dict }: FooterProps) {
                             {t.social_desc || 'Stay updated with our latest offers and sky adventures.'}
                         </p>
                         <div className="flex gap-4">
-                            <a href="#" className="bg-[#FFFFFF]/10 hover:bg-[#F27A23] text-white p-3 rounded-full transition-all duration-300 transform hover:-translate-y-1">
+                            <a href="https://web.facebook.com/profile.php?id=61587155890037" target="_blank" rel="noopener noreferrer" className="bg-[#FFFFFF]/10 hover:bg-[#F27A23] text-white p-3 rounded-full transition-all duration-300 transform hover:-translate-y-1">
                                 <Facebook size={20} />
                             </a>
-                            <a href="#" className="bg-[#FFFFFF]/10 hover:bg-[#F27A23] text-white p-3 rounded-full transition-all duration-300 transform hover:-translate-y-1">
+                            <a href="https://www.instagram.com/skyexperience_marrakech" target="_blank" rel="noopener noreferrer" className="bg-[#FFFFFF]/10 hover:bg-[#F27A23] text-white p-3 rounded-full transition-all duration-300 transform hover:-translate-y-1">
                                 <Instagram size={20} />
                             </a>
                         </div>

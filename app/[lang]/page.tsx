@@ -17,6 +17,7 @@ import SEOContent from "@/components/SEOContent";
 
 import { Flight } from '../data/flights';
 import { getDictionary } from '../get-dictionary';
+import { getActiveFlights } from '@/services/flightService';
 
 interface PageProps {
   params: Promise<{ lang: string }>;
@@ -110,7 +111,12 @@ async function getFeaturedFlightsData(lang: string): Promise<Flight[]> {
 export default async function Home({ params }: PageProps) {
   const { lang } = await params;
   const dict = await getDictionary(lang);
-  const featuredFlights = await getFeaturedFlightsData(lang);
+  
+  // Fetch data in parallel for better performance
+  const [featuredFlights, allActiveFlights] = await Promise.all([
+    getFeaturedFlightsData(lang),
+    getActiveFlights({ next: { revalidate: 300 } }) // Revalidate every 5 minutes
+  ]);
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -209,7 +215,7 @@ export default async function Home({ params }: PageProps) {
                 <div
                   className="w-full max-w-5xl mb-4 xs:mb-5 sm:mb-6 mt-6 xs:mt-8 sm:mt-10"
                 >
-                  <SearchBar lang={lang} dict={dict} />
+                  <SearchBar lang={lang} dict={dict} initialFlights={allActiveFlights} />
 
                   {/* CTA Button - Moved Below Search */}
                   <div className="mt-4 xs:mt-5 sm:mt-6 flex flex-col xs:flex-row items-center justify-center gap-3 xs:gap-4">

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Mail, Phone, MapPin, Send, Clock, MessageSquare } from 'lucide-react';
-import { FaWhatsapp, FaInstagram, FaTiktok } from 'react-icons/fa';
+import { FaWhatsapp, FaInstagram, FaFacebook } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 
@@ -115,7 +115,7 @@ export default function ContactPageClient({ dict, lang }: ContactPageClientProps
                             <Mail className="text-[#C04000] mt-1 flex-shrink-0" size={16} />
                             <div>
                                 <p className="text-gray-500 text-xs mb-1">Email:</p>
-                                <a href="mailto:contact@skyexperience.com" className="text-gray-900 hover:text-[#C04000] font-medium break-all transition-colors">contact@skyexperience.com</a>
+                                <a href="mailto:skyexperiencemarrakech@gmail.com" className="text-gray-900 hover:text-[#C04000] font-medium break-all transition-colors">skyexperiencemarrakech@gmail.com</a>
                             </div>
                         </div>
 
@@ -150,18 +150,18 @@ export default function ContactPageClient({ dict, lang }: ContactPageClientProps
                             <span className="text-gray-900 font-medium group-hover/social:text-green-700">WhatsApp</span>
                         </a>
 
-                        <a href="https://instagram.com/skyexperience" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 rounded-lg hover:bg-pink-50 hover:border-pink-200 border border-transparent transition-all duration-200 group/social">
+                        <a href="https://www.instagram.com/skyexperience_marrakech" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 rounded-lg hover:bg-pink-50 hover:border-pink-200 border border-transparent transition-all duration-200 group/social">
                             <div className="w-10 h-10 bg-pink-50 rounded-full flex items-center justify-center group-hover/social:bg-pink-500 transition-colors">
                                 <FaInstagram className="text-pink-600 group-hover/social:text-white transition-colors" size={20} />
                             </div>
                             <span className="text-gray-900 font-medium group-hover/social:text-pink-700">Instagram</span>
                         </a>
 
-                        <a href="https://tiktok.com/@skyexperience" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 hover:border-gray-300 border border-transparent transition-all duration-200 group/social">
-                            <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center group-hover/social:bg-gray-800 transition-colors">
-                                <FaTiktok className="text-gray-900 group-hover/social:text-white transition-colors" size={20} />
+                        <a href="https://web.facebook.com/profile.php?id=61587155890037" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50 hover:border-blue-200 border border-transparent transition-all duration-200 group/social">
+                            <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center group-hover/social:bg-blue-600 transition-colors">
+                                <FaFacebook className="text-blue-600 group-hover/social:text-white transition-colors" size={20} />
                             </div>
-                            <span className="text-gray-900 font-medium group-hover/social:text-gray-800">TikTok</span>
+                            <span className="text-gray-900 font-medium group-hover/social:text-blue-700">Facebook</span>
                         </a>
                     </div>
                 </motion.div>
@@ -212,7 +212,7 @@ export default function ContactPageClient({ dict, lang }: ContactPageClientProps
 
                     <div className="relative w-full h-[400px] rounded-xl overflow-hidden shadow-md">
                         <iframe
-                            src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3397.4!2d-7.98!3d31.63!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzHCsDM3JzQ4LjAiTiA3wrA1OCc0OC4wIlc!5e0!3m2!1s${lang}!2sma!4v1234567890`}
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4259.5757124776555!2d-8.0163231!3d31.632623600000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xdafef60458f463d%3A0xa0894400db0e98ab!2sSky%20Experience%20Hot%20Air%20Balloon%20Marrakech!5e1!3m2!1sfr!2sma!4v1772553025425!5m2!1sfr!2sma"
                             width="100%"
                             height="100%"
                             style={{ border: 0 }}
@@ -231,7 +231,7 @@ export default function ContactPageClient({ dict, lang }: ContactPageClientProps
                             </div>
                         </div>
                         <a
-                            href="https://maps.google.com/?q=31.63,-7.98"
+                            href="https://maps.app.goo.gl/t7FfvdK91oPT2wAj6"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="bg-white text-[#C04000] px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg font-bold text-xs sm:text-sm hover:bg-gray-100 transition-colors w-full sm:w-auto text-center whitespace-nowrap"
@@ -422,7 +422,7 @@ export default function ContactPageClient({ dict, lang }: ContactPageClientProps
                                     WhatsApp
                                 </a>
                                 <a
-                                    href="mailto:contact@skyexperience.com"
+                                    href="mailto:skyexperiencemarrakech@gmail.com"
                                     className="flex items-center gap-2 text-[#C04000] hover:text-[#A03000] font-medium"
                                 >
                                     <Mail size={20} />

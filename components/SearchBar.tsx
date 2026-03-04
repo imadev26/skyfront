@@ -5,13 +5,15 @@ import { Search, MapPin, Calendar, Users, Activity, ChevronDown, Minus, Plus, Ch
 import { useRouter } from 'next/navigation';
 
 import { getActiveFlights } from '../app/data/flights';
+import { Flight, FlightCache } from '../services/flightService';
 
 interface SearchBarProps {
     lang?: string;
     dict?: any;
+    initialFlights?: Flight[]; // Flights from SSR
 }
 
-export default function SearchBar({ lang = 'en', dict }: SearchBarProps) {
+export default function SearchBar({ lang = 'en', dict, initialFlights = [] }: SearchBarProps) {
     const router = useRouter();
     const t = dict?.search_bar || {};
 
@@ -23,6 +25,28 @@ export default function SearchBar({ lang = 'en', dict }: SearchBarProps) {
     const [activity, setActivity] = useState('');
     const [guests, setGuests] = useState({ adults: 0, children: 0 });
     const [date, setDate] = useState<Date | null>(null);
+
+    // Flights state with SSR data + cache fallback
+    const [flights, setFlights] = useState<Flight[]>(() => {
+        if (initialFlights && initialFlights.length > 0) {
+            return initialFlights;
+        }
+        // Try cache if no SSR data
+        const cached = FlightCache.get();
+        if (cached && cached.length > 0) {
+            return cached;
+        }
+        // Fallback to static data
+        return getActiveFlights();
+    });
+    const [isLoadingFlights, setIsLoadingFlights] = useState(false);
+
+    // Cache flights when received from SSR
+    useEffect(() => {
+        if (flights.length > 0) {
+            FlightCache.set(flights);
+        }
+    }, [flights]);
 
     // Close dropdowns when clicking outside
     const searchBarRef = useRef<HTMLDivElement>(null);
@@ -134,15 +158,32 @@ export default function SearchBar({ lang = 'en', dict }: SearchBarProps) {
                 {activeDropdown === 'activity' && (
                     <div className="absolute top-full left-0 right-0 md:w-full md:min-w-[320px] bg-white rounded-xl shadow-[0_20px_60px_-15px_rgba(192,64,0,0.3)] mt-2 xs:mt-3 md:mt-4 py-2 z-[100] border-2 border-[#C04000]/20 max-h-[320px] overflow-y-auto">
                         <div className="px-4 xs:px-6 py-2 xs:py-3 text-[10px] xs:text-xs font-bold text-gray-400 uppercase tracking-wider cursor-default bg-gray-50/50 sticky top-0">— {t.all_activity || 'All Activity'} —</div>
-                        {getActiveFlights().map(item => (
-                            <div
-                                key={item.id}
-                                className="px-4 xs:px-6 py-2.5 xs:py-3 hover:bg-orange-50 cursor-pointer text-gray-700 font-medium transition-all hover:text-[#C04000] hover:pl-5 xs:hover:pl-7 border-b border-gray-100 last:border-b-0"
-                                onClick={(e) => { e.stopPropagation(); setActivity(item.title); setActiveDropdown(null); }}
-                            >
-                                <span className="text-xs xs:text-sm line-clamp-2">{item.title}</span>
+                        {isLoadingFlights ? (
+                            <div className="px-4 xs:px-6 py-4 text-center text-gray-500 text-sm">
+                                <div className="animate-pulse">Loading activities...</div>
                             </div>
-                        ))}
+                        ) : flights.length > 0 ? (
+                            flights.map(item => (
+                                <div
+                                    key={item._id || item.slug}
+                                    className="px-4 xs:px-6 py-2.5 xs:py-3 hover:bg-orange-50 cursor-pointer text-gray-700 font-medium transition-all hover:text-[#C04000] hover:pl-5 xs:hover:pl-7 border-b border-gray-100 last:border-b-0"
+                                    onClick={(e) => { 
+                                        e.stopPropagation(); 
+                                        const title = lang === 'fr' && item.title_fr ? item.title_fr : item.title;
+                                        setActivity(title); 
+                                        setActiveDropdown(null); 
+                                    }}
+                                >
+                                    <span className="text-xs xs:text-sm line-clamp-2">
+                                        {lang === 'fr' && item.title_fr ? item.title_fr : item.title}
+                                    </span>
+                                </div>
+                            ))
+                        ) : (
+                            <div className="px-4 xs:px-6 py-4 text-center text-gray-500 text-sm">
+                                {t.no_activities || 'No activities available'}
+                            </div>
+                        )}
                     </div>
                 )}
             </div>

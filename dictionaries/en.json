@@ -129,8 +129,8 @@
             "phone": "Phone"
         },
         "address_value": "3rd Floor Office No. 16, Corner Bd Moulay Rachid, Marrakech 40000",
-        "email_value": "contact@skyexperience-marrakech.com",
-        "phone_value": "+212 661 445 327"
+        "email_value": "skyexperiencemarrakech@gmail.com",
+        "phone_value": "+212 751 622 180"
     },
     "booking": {
         "title": "Book Your Adventure",
@@ -340,7 +340,7 @@
         "card_phone_title": "Phone & WhatsApp",
         "card_email_title": "Email",
         "card_location_title": "Location",
-        "card_location_value": "Atlas Mountain Region, Marrakech, Morocco",
+        "card_location_value": "3rd Floor Office N° 16, Angle Bd Moulay Rachid, Marrakech",
         "card_location_link": "Get directions",
         "card_hours_title": "Opening Hours",
         "card_hours_weekdays": "Mon – Sat: 6:00 AM – 8:00 PM",
@@ -369,8 +369,8 @@
         "card_social_title": "Stay Connected",
         "card_hours_title": "Opening Hours",
         "label_address": "Address",
-        "address_line1": "Atlas Mountain Region",
-        "address_line2": "Marrakech, Morocco",
+        "address_line1": "3rd Floor Office N° 16, Angle Bd Moulay Rachid",
+        "address_line2": "Marrakech 40000, Morocco",
         "hours_weekdays": "Monday – Friday",
         "hours_saturday": "Saturday",
         "hours_sunday": "Sunday",
@@ -378,7 +378,7 @@
         "hours_value_saturday": "6:00 AM – 8:00 PM",
         "hours_value_sunday": "6:00 AM – 6:00 PM",
         "map_title": "Our Location",
-        "map_subtitle": "Our launch site is set in the beautiful countryside near Marrakech, with breathtaking views of the Atlas Mountains.",
+        "map_subtitle": "Our office is located in the heart of Marrakech, Angle Bd Moulay Rachid. Visit us for any information.",
         "get_directions": "Get Directions",
         "form_title": "Have a Question?",
         "form_subtitle": "Fill in the form below and we will get back to you as soon as possible.",
