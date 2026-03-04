@@ -14,6 +14,7 @@ import SearchBar from "@/components/SearchBar";
 import WhyChooseSection from "@/components/WhyChooseSection";
 import ContactSection from "@/components/ContactSection";
 import SEOContent from "@/components/SEOContent";
+import StructuredData from "@/components/StructuredData";
 
 import { Flight } from '../data/flights';
 import { getDictionary } from '../get-dictionary';
@@ -29,19 +30,37 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (lang === 'fr') {
     return {
       title: "Montgolfière Marrakech | Expérience Luxe Sky Experience",
-      description: "Découvrez la magie d'un vol en montgolfière Marrakech avec Sky Experience. Vol privé au lever du soleil, service haut de gamme et panoramas inoubliables sur l'Atlas.",
+      description: "Découvrez la magie d'un vol en montgolfière Marrakech avec Sky Experience. Vol privé au lever du soleil, service haut de gamme et panoramas inoubliables sur l'Atlas. Réservez maintenant.",
+      keywords: [
+        'montgolfière Marrakech',
+        'vol montgolfière Maroc',
+        'balloon Marrakech',
+        'vol montgolfière Atlas',
+        'expérience luxe Marrakech',
+        'lever du soleil Marrakech',
+        'Sky Experience Marrakech',
+        'réserver montgolfière Maroc',
+        'activité Marrakech',
+        'tourisme Marrakech',
+      ],
       alternates: {
-        canonical: 'https://skyexperiencemarrakech.com/fr',
+        canonical: 'https://skyexperience-marrakech.com/fr',
         languages: { 'en': '/en', 'fr': '/fr' },
       },
       openGraph: {
         title: 'Montgolfière Marrakech | Sky Experience',
-        description: "Vol en montgolfière au lever du soleil sur Marrakech et l'Atlas.",
-        url: 'https://skyexperiencemarrakech.com/fr',
+        description: "Vol en montgolfière au lever du soleil sur Marrakech et l'Atlas. Service premium et expérience inoubliable.",
+        url: 'https://skyexperience-marrakech.com/fr',
         siteName: 'Sky Experience Marrakech',
         locale: 'fr_FR',
         type: 'website',
-        images: [{ url: '/images/hero.webp', width: 1200, height: 630, alt: 'Montgolfière Marrakech' }],
+        images: [{ 
+          url: '/images/hero.webp', 
+          width: 1200, 
+          height: 630, 
+          alt: 'Montgolfière Marrakech',
+          type: 'image/webp',
+        }],
       },
       twitter: {
         card: 'summary_large_image',
@@ -54,19 +73,40 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: "Hot Air Balloon Marrakech | Sky Experience Morocco",
-    description: "Experience a premium hot air balloon Marrakech flight with Sky Experience. Private sunrise flights, luxury service & unforgettable views over the Atlas Mountains.",
+    description: "Experience a premium hot air balloon Marrakech flight with Sky Experience. Private sunrise flights, luxury service & unforgettable views over the Atlas Mountains. Book now!",
+    keywords: [
+      'hot air balloon Marrakech',
+      'balloon flight Marrakech',
+      'hot air balloon Morocco',
+      'Marrakech balloon ride',
+      'Atlas Mountains balloon',
+      'sunrise balloon Marrakech',
+      'private balloon flight Morocco',
+      'luxury balloon experience',
+      'Sky Experience Marrakech',
+      'Morocco balloon tours',
+      'book balloon Marrakech',
+      'Marrakech activities',
+      'Morocco tourism',
+    ],
     alternates: {
-      canonical: 'https://skyexperiencemarrakech.com/en',
+      canonical: 'https://skyexperience-marrakech.com/en',
       languages: { 'en': '/en', 'fr': '/fr' },
     },
     openGraph: {
       title: 'Hot Air Balloon Marrakech | Sky Experience Morocco',
-      description: 'Premium hot air balloon flights in Marrakech. Book your sunrise adventure over the Atlas Mountains.',
-      url: 'https://skyexperiencemarrakech.com/en',
+      description: 'Premium hot air balloon flights in Marrakech. Book your sunrise adventure over the Atlas Mountains. Unforgettable luxury experience.',
+      url: 'https://skyexperience-marrakech.com/en',
       siteName: 'Sky Experience Marrakech',
       locale: 'en_US',
       type: 'website',
-      images: [{ url: '/images/hero.webp', width: 1200, height: 630, alt: 'Hot Air Balloon Marrakech' }],
+      images: [{ 
+        url: '/images/hero.webp', 
+        width: 1200, 
+        height: 630, 
+        alt: 'Hot Air Balloon Marrakech',
+        type: 'image/webp',
+      }],
     },
     twitter: {
       card: 'summary_large_image',
@@ -118,42 +158,9 @@ export default async function Home({ params }: PageProps) {
     getActiveFlights() // Always fetch fresh data for SearchBar destinations
   ]);
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'TravelAgency',
-    'name': 'Sky Experience Marrakech',
-    'image': 'https://skyexperiencemarrakech.com/images/hero.webp',
-    'description': dict.hero.subtitle,
-    'url': `https://skyexperiencemarrakech.com/${lang}`,
-    'telephone': '+212751622180',
-    'address': {
-      '@type': 'PostalAddress',
-      'streetAddress': '3ème Étage Bureau N° 16, Angle Bd Moulay Rachid',
-      'addressLocality': 'Marrakech',
-      'postalCode': '40000',
-      'addressCountry': 'MA'
-    },
-    'priceRange': '$$',
-    'aggregateRating': {
-      '@type': 'AggregateRating',
-      'ratingValue': '4.9',
-      'reviewCount': '1250',
-      'bestRating': '5',
-      'worstRating': '1'
-    },
-    'sameAs': [
-      'https://www.instagram.com/skyexperience_marrakech',
-      'https://web.facebook.com/profile.php?id=61587155890037',
-      'https://www.tripadvisor.com/Attraction_Review-g293734-d26645858-Reviews-Sky_Experience_Marrakech-Marrakech_Marrakech_Safi.html'
-    ]
-  };
-
   return (
     <main className="min-h-screen font-sans bg-gray-50">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <StructuredData lang={lang} />
 
       {/* --- HERO SECTION --- */}
       <section className="relative min-h-screen sm:min-h-[900px] md:min-h-[800px] lg:min-h-[850px] w-full overflow-visible">
@@ -267,7 +274,7 @@ export default async function Home({ params }: PageProps) {
           <div className="flex flex-wrap justify-center items-center gap-6 xs:gap-8 md:gap-16 opacity-80 grayscale hover:grayscale-0 transition-all duration-500">
             <div className="relative w-28 h-10 xs:w-32 xs:h-12 md:w-40 md:h-16">
               <Image
-                src="/images/airbnb.png"
+                src="/images/airbnb.webp"
                 alt="Airbnb"
                 fill
                 className="object-contain"
@@ -276,7 +283,7 @@ export default async function Home({ params }: PageProps) {
             </div>
             <div className="relative w-28 h-10 xs:w-32 xs:h-12 md:w-40 md:h-16">
               <Image
-                src="/images/Booking.png"
+                src="/images/Booking.webp"
                 alt="Booking.com"
                 fill
                 className="object-contain"
@@ -285,7 +292,7 @@ export default async function Home({ params }: PageProps) {
             </div>
             <div className="relative w-28 h-10 xs:w-32 xs:h-12 md:w-40 md:h-16">
               <Image
-                src="/images/Tripadvisor.png"
+                src="/images/Tripadvisor.webp"
                 alt="Tripadvisor"
                 fill
                 className="object-contain"
@@ -294,7 +301,7 @@ export default async function Home({ params }: PageProps) {
             </div>
             <div className="relative w-28 h-10 xs:w-32 xs:h-12 md:w-40 md:h-16">
               <Image
-                src="/images/getyourguide.png"
+                src="/images/getyourguide.webp"
                 alt="GetYourGuide"
                 fill
                 className="object-contain"

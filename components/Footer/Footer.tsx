@@ -39,7 +39,7 @@ export default function Footer({ lang = 'en', dict }: FooterProps) {
                     <div className="space-y-6">
                         <div className="relative w-40 h-12">
                             <Image
-                                src="/images/skyexp.png"
+                                src="/images/skyexp.webp"
                                 alt="Sky Experience"
                                 fill
                                 className="object-contain brightness-0 invert"
@@ -122,9 +122,22 @@ export default function Footer({ lang = 'en', dict }: FooterProps) {
 
                 {/* Bottom Bar: Copyright */}
                 <div className="pt-8 flex flex-col md:flex-row justify-between items-center gap-4 mt-8 border-t border-white/10">
-                    <p className="text-gray-400 text-sm text-center md:text-left">
-                        © {new Date().getFullYear()} Sky Experience. {t.rights}
-                    </p>
+                    <div className="flex flex-col items-center md:items-start gap-2">
+                        <p className="text-gray-400 text-sm text-center md:text-left">
+                            © {new Date().getFullYear()} Sky Experience. {t.rights}
+                        </p>
+                        <p className="text-gray-500 text-xs text-center md:text-left">
+                            Developed by{' '}
+                            <a 
+                                href="https://github.com/imadev26" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="text-[#F27A23] hover:text-white transition-colors font-semibold"
+                            >
+                                ADAOUMOUM Imad
+                            </a>
+                        </p>
+                    </div>
                     <div className="flex gap-6 text-sm text-gray-400">
                         <Link href="/privacy" className="hover:text-white transition-colors">{t.privacy || 'Privacy Policy'}</Link>
                         <Link href="/terms" className="hover:text-white transition-colors">{t.terms || 'Terms of Service'}</Link>

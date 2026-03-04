@@ -149,7 +149,7 @@ The golden hour light creates ideal conditions for photography. Don't forget to 
 - Your fellow passengers silhouetted against the sunrise
 
 Book your sunrise flight today and experience the magic for yourself!`,
-        image: '/images/classic1.png',
+        image: '/images/classic1.webp',
         ogImage: '/images/og/sunrise-flight.jpg',
         category: 'Experience',
         tags: ['sunrise', 'photography', 'atlas mountains', 'marrakech'],
@@ -208,7 +208,7 @@ All our flights follow strict safety protocols:
 - Weather monitoring
 
 Ready for your adventure? Book now and let us take care of the rest!`,
-        image: '/images/balloon-basket.png',
+        image: '/images/balloon-basket.webp',
         category: 'Tips',
         tags: ['first flight', 'preparation', 'safety', 'tips'],
         authorId: 'author_002',
@@ -260,7 +260,7 @@ Your private flight includes:
 - Professional photos
 
 Make your special moment truly magical. Book your romantic flight today!`,
-        image: '/images/mariage-main.png',
+        image: '/images/mariage-main.webp',
         category: 'Romance',
         tags: ['romance', 'proposal', 'anniversary', 'private flight'],
         authorId: 'author_003',

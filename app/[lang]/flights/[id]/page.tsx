@@ -17,7 +17,7 @@ interface FlightApiResponse {
     slugs: { en: string; fr: string };
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://skyexperiencemarrakech.com';
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://skyexperience-marrakech.com';
 
 async function getFlightData(slugOrId: string): Promise<FlightApiResponse | null> {
     try {

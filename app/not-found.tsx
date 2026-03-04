@@ -20,7 +20,7 @@ export default function NotFound() {
                     <div className="relative z-10 w-full max-w-2xl mx-auto flex flex-col items-center">
                         <div className="relative w-64 h-64 md:w-80 md:h-80 mb-6 animate-float">
                             <Image
-                                src="/images/balloon-intro.png"
+                                src="/images/balloon-intro.webp"
                                 alt="Lost Hot Air Balloon"
                                 fill
                                 className="object-contain drop-shadow-2xl"

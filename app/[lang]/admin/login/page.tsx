@@ -42,7 +42,7 @@ export default function AdminLogin({ params }: { params: Promise<{ lang: string 
             {/* Left Side - Image & Brand */}
             <div className="hidden lg:flex lg:w-1/2 relative bg-gray-900 overflow-hidden">
                 <Image
-                    src="/images/balloon-landscape.png"
+                    src="/images/balloon-landscape.webp"
                     alt="Sky Experience Balloons"
                     fill
                     className="object-cover opacity-60"
@@ -70,7 +70,7 @@ export default function AdminLogin({ params }: { params: Promise<{ lang: string 
                     <div className="text-center lg:text-left">
                         <div className="inline-block p-3 rounded-full bg-orange-100 mb-6">
                             <Image
-                                src="/images/logo.png"
+                                src="/images/logo.webp"
                                 alt="Sky Experience Logo"
                                 width={48}
                                 height={48}

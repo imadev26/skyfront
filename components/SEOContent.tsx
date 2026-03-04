@@ -31,7 +31,7 @@ export default function SEOContent({ dictionary }: SEOContentProps) {
                     >
                         <div className="relative h-[500px] w-full rounded-2xl overflow-hidden shadow-2xl">
                             <Image
-                                src="/images/classic-main.png"
+                                src="/images/classic-main.webp"
                                 alt="Hot Air Balloon Marrakech Experience"
                                 fill
                                 sizes="(max-width: 1024px) 100vw, 50vw"

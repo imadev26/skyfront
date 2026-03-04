@@ -25,7 +25,7 @@ export default function AboutSection({ dict, lang = 'fr' }: AboutSectionProps) {
           <div className="relative">
             <div className="relative w-full h-[720px] rounded-3xl overflow-hidden shadow-2xl">
               <Image
-                src="/images/balloon-intro.png"
+                src="/images/balloon-intro.webp"
                 alt="Adventure Balloon"
                 fill
                 className="object-cover"

@@ -66,7 +66,7 @@ export default function Navbar({ variant = 'fixed', lang = 'en', dict }: NavbarP
                 <Link href={`/${lang}`} className="flex items-center gap-2">
                     <div className="relative h-8 xs:h-10 sm:h-12 w-32 xs:w-40 sm:w-48">
                         <Image
-                            src="/images/logo.png"
+                            src="/images/logo.webp"
                             alt="Sky Experience Logo"
                             fill
                             className="object-contain"

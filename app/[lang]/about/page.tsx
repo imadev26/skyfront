@@ -27,7 +27,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
           <div className="relative order-2 md:order-1">
             <div className="relative w-full h-[450px] sm:h-[500px] md:h-[580px] lg:h-[680px] xl:h-[720px] rounded-xl sm:rounded-2xl overflow-hidden shadow-xl" style={{ position: 'relative' }}>
               <Image
-                src="/images/balloon-intro.png"
+                src="/images/balloon-intro.webp"
                 alt="Adventure Balloon"
                 fill
                 className="object-cover object-center"
@@ -96,7 +96,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
             </div>
 
             <Image
-              src="/images/smiling-woman.png"
+              src="/images/smiling-woman.webp"
               alt="Balloon view"
               width={300}
               height={300}
@@ -105,7 +105,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
             />
 
             <Image
-              src="/images/balloon-landscape.png"
+              src="/images/balloon-landscape.webp"
               alt="Balloon group"
               width={300}
               height={300}
@@ -140,7 +140,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
             <div className="relative w-full max-w-md">
               <div className="relative w-full h-[280px] sm:h-[380px] md:h-[450px] lg:h-[500px] rounded-xl sm:rounded-2xl md:rounded-3xl overflow-hidden">
                 <Image
-                  src="/images/group-basket.png"
+                  src="/images/group-basket.webp"
                   alt="Balloon safety"
                   fill
                   className="object-cover object-center"
@@ -171,7 +171,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
             {/* TOP BIG IMAGE */}
             <div>
               <Image
-                src="/images/balloon-basket.png"
+                src="/images/balloon-basket.webp"
                 alt="Hot air balloon"
                 width={800}
                 height={500}
@@ -185,7 +185,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
             <div className="grid grid-cols-2 gap-0">
 
               <Image
-                src="/images/balloon-land.png"
+                src="/images/balloon-land.webp"
                 alt="Multiple balloons"
                 width={400}
                 height={300}
@@ -220,7 +220,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
         {/* BACKGROUND IMAGE */}
         <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden">
           <Image
-            src="/images/relax-bg.jpg"
+            src="/images/relax-bg.webp"
             alt="Relaxation Balloon"
             fill
             className="object-cover object-center blur-[2px]"
@@ -258,7 +258,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
               {/* Image 1 - top left */}
               <div className="absolute top-0 left-0 w-[70%] h-[140px] sm:h-[160px] md:h-[190px] lg:h-[220px] rounded-[20px] sm:rounded-[24px] overflow-hidden">
                 <Image
-                  src="/images/ourflight.png"
+                  src="/images/ourflight.webp"
                   alt="Hot air balloons sky"
                   fill
                   className="object-cover"
@@ -269,7 +269,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
               {/* Image 2 - bottom right */}
               <div className="absolute bottom-17 right-0 w-[60%] h-[120px] sm:h-[140px] md:h-[170px] lg:h-[220px] rounded-[20px] sm:rounded-[24px] overflow-hidden shadow-lg">
                 <Image
-                  src="/images/balloon-basketZ.png"
+                  src="/images/balloon-basketZ.webp"
                   alt="Balloon basket view"
                   fill
                   className="object-cover"
@@ -283,7 +283,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
           <div className="max-w-6xl mx-auto px-4">
             <div className="relative bottom-8 sm:bottom-12 md:bottom-16 lg:bottom-20 w-[90%] sm:w-[85%] md:w-[75%] lg:w-[70%] h-32 sm:h-40 md:h-48 lg:h-56 rounded-xl sm:rounded-2xl md:rounded-3xl overflow-hidden">
               <Image
-                src="/images/desert-balloons.png"
+                src="/images/desert-balloons.webp"
                 alt="Hot air balloons over desert"
                 fill
                 className="object-cover "
@@ -315,7 +315,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
               {/* LEFT BIG IMAGE */}
               <div className="absolute top-0 left-0 w-[70%] h-[135px] sm:h-[160px] md:h-[190px] lg:h-[230px] rounded-xl sm:rounded-2xl md:rounded-3xl overflow-hidden">
                 <Image
-                  src="/images/commitment-main.png"
+                  src="/images/commitment-main.webp"
                   alt="Group in hot air balloon"
                   fill
                   className="object-cover"
@@ -326,7 +326,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
               {/* LEFT BOTTOM IMAGE */}
               <div className="absolute bottom-4 sm:bottom-6 md:bottom-8 lg:bottom-10 left-0 w-[70%] h-[90px] sm:h-[105px] md:h-[120px] lg:h-[140px] rounded-xl sm:rounded-2xl md:rounded-3xl overflow-hidden">
                 <Image
-                  src="/images/commitment-bottom.png"
+                  src="/images/commitment-bottom.webp"
                   alt="Inside balloon"
                   fill
                   className="object-cover"

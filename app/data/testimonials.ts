@@ -23,7 +23,7 @@ export const TESTIMONIALS: Testimonial[] = [
         date: "févr. 2025 • En famille",
         rating: 5,
         text: "Expérience incroyable et très bien organisée par la compagnie. Si bien que cela mérite un avis positif laissé ici afin que d'autres personnes puissent vivre la même chose en toute confiance ! Notre \"pilote\" était français et très rassurant, vous pouvez y foncer les yeux fermés !Merci pour tout et bravo !",
-        avatar: "/images/avatar1.png",
+        avatar: "/images/avatar1.webp",
         video: false
     },
     {
@@ -31,7 +31,7 @@ export const TESTIMONIALS: Testimonial[] = [
         date: "décembre 2024",
         rating: 5,
         text: "J'ai vécu une expérience inoubliable en montgolfière pour admirer le lever de soleil, et c'était tout simplement magique ! Voler au-dessus des paysages à couper le souffle dans une atmosphère paisible était une sensation incroyable. Khalid a été un hôte",
-        avatar: "/images/avatar2.png",
+        avatar: "/images/avatar2.webp",
         viewMore: true
     }
 ];

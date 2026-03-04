@@ -6,9 +6,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { Clock, Search, X, User, Loader2 } from "lucide-react";
 import api from "@/services/api";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer/Footer";
 import PageHeader from "@/components/PageHeader";
+import enDict from "@/dictionaries/en.json";
+import frDict from "@/dictionaries/fr.json";
 
 // Define interface matching API response
 interface BlogPost {
@@ -29,6 +29,7 @@ interface BlogPost {
 
 export default function BlogsPage({ params }: { params: Promise<{ lang: string }> }) {
     const { lang } = use(params);
+    const dict = lang === 'fr' ? frDict : enDict;
     const [posts, setPosts] = useState<BlogPost[]>([]);
     const [categories, setCategories] = useState<{ value: string, label: string }[]>([]); // Store localized categories
     const [loading, setLoading] = useState(true);
@@ -97,7 +98,6 @@ export default function BlogsPage({ params }: { params: Promise<{ lang: string }
 
     return (
         <main className="min-h-screen bg-gray-50">
-            <Navbar variant="fixed" lang={lang} />
 
             {/* Hero Section */}
             <PageHeader
@@ -278,8 +278,6 @@ export default function BlogsPage({ params }: { params: Promise<{ lang: string }
                     )}
                 </div>
             </section>
-
-            <Footer />
         </main>
     );
 }

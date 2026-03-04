@@ -42,7 +42,7 @@ export default function PanoramicSection({ dict }: PanoramicSectionProps) {
                         transition={{ duration: 0.6, delay: 0.2 }}
                     >
                         <Image
-                            src="/images/panoramic.png"
+                            src="/images/panoramic.webp"
                             alt="Panoramic View of Hot Air Balloons"
                             fill
                             className="object-cover hover:scale-105 transition-transform duration-700"
@@ -61,7 +61,7 @@ export default function PanoramicSection({ dict }: PanoramicSectionProps) {
                             transition={{ duration: 0.6, delay: 0.4 }}
                         >
                             <Image
-                                src="/images/mariage-main.png"
+                                src="/images/mariage-main.webp"
                                 alt="Couple enjoying balloon flight"
                                 fill
                                 className="object-cover hover:scale-105 transition-transform duration-700"
@@ -78,7 +78,7 @@ export default function PanoramicSection({ dict }: PanoramicSectionProps) {
                             transition={{ duration: 0.6, delay: 0.6 }}
                         >
                             <Image
-                                src="/images/classic1.png"
+                                src="/images/classic1.webp"
                                 alt="Balloons in the sky"
                                 fill
                                 className="object-cover hover:scale-105 transition-transform duration-700"
