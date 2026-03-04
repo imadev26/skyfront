@@ -41,7 +41,8 @@ export async function getAllFlights(options?: RequestInit): Promise<Flight[]> {
         }
 
         const data = await response.json();
-        return data || [];
+        // API returns { success: true, flights: [...] }
+        return Array.isArray(data?.flights) ? data.flights : [];
     } catch (error) {
         console.error('Error fetching flights:', error);
         return [];
@@ -70,7 +71,9 @@ export async function getFlightById(id: string, options?: RequestInit): Promise<
             return null;
         }
 
-        return await response.json();
+        const data = await response.json();
+        // API returns { success: true, flight: {...}, suggestedFlights, slugs }
+        return data?.flight || null;
     } catch (error) {
         console.error('Error fetching flight:', error);
         return null;
