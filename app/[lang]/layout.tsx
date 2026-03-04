@@ -76,6 +76,14 @@ export const metadata: Metadata = {
     images: ['/images/hero.webp'],
     creator: '@skyexperience',
   },
+  icons: {
+    icon: [
+      { url: '/icon.png', type: 'image/png' },
+      { url: '/images/logo.png', type: 'image/png' },
+    ],
+    shortcut: '/images/logo.png',
+    apple: '/images/logo.png',
+  },
 };
 
 
