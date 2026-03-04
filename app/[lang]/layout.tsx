@@ -3,6 +3,7 @@ import { Inter, Playfair_Display, Dancing_Script } from "next/font/google";
 import "../globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
 import { getDictionary } from "../get-dictionary";
 import { LanguageSlugProvider } from "@/context/LanguageSlugContext";
 import { CurrencyProvider } from "@/context/CurrencyContext";
@@ -35,9 +36,8 @@ export const metadata: Metadata = {
     default: "Hot Air Balloon Marrakech | Sky Experience Morocco",
     template: "%s | Sky Experience Marrakech",
   },
-  description: "Experience a magical hot air balloon flight over Marrakech at sunrise with Sky Experience. Private & group flights, luxury service and breathtaking views of the Atlas Mountains and Sahara.",
+  description: "Hot air balloon Marrakech at sunrise. Private & group flights over Atlas Mountains. Luxury service with Sky Experience Morocco.",
   metadataBase: new URL('https://skyexperiencemarrakech.com'),
-  keywords: ['hot air balloon marrakech', 'montgolfière marrakech', 'balloon flight morocco', 'sky experience', 'sunrise balloon ride', 'luxury marrakech tour'],
   authors: [{ name: 'Sky Experience Marrakech', url: 'https://skyexperiencemarrakech.com' }],
   creator: 'Sky Experience Marrakech',
   publisher: 'Sky Experience Marrakech',
@@ -100,6 +100,7 @@ export default async function RootLayout({
               {children}
             </div>
             <Footer lang={lang} dict={dict} />
+            <WhatsAppButton />
           </CurrencyProvider>
         </LanguageSlugProvider>
       </body>

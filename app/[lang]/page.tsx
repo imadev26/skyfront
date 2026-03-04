@@ -33,7 +33,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         canonical: 'https://skyexperiencemarrakech.com/fr',
         languages: { 'en': '/en', 'fr': '/fr' },
       },
-      keywords: ['montgolfière marrakech', 'vol luxe', 'marrakech by air', 'sky experience', 'vol privé', 'baptême de l\'air marrakech', 'vol montgolfière marrakech'],
       openGraph: {
         title: 'Montgolfière Marrakech | Sky Experience',
         description: "Vol en montgolfière au lever du soleil sur Marrakech et l'Atlas.",
@@ -59,7 +58,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       canonical: 'https://skyexperiencemarrakech.com/en',
       languages: { 'en': '/en', 'fr': '/fr' },
     },
-    keywords: ['hot air balloon marrakech', 'marrakech by air', 'hot air balloon morocco', 'sky experience', 'marrakech hot air balloon', 'luxury balloon flight', 'sunrise flight marrakech'],
     openGraph: {
       title: 'Hot Air Balloon Marrakech | Sky Experience Morocco',
       description: 'Premium hot air balloon flights in Marrakech. Book your sunrise adventure over the Atlas Mountains.',
@@ -121,11 +119,12 @@ export default async function Home({ params }: PageProps) {
     'image': 'https://skyexperiencemarrakech.com/images/hero.webp',
     'description': dict.hero.subtitle,
     'url': `https://skyexperiencemarrakech.com/${lang}`,
-    'telephone': '+212600000000',
+    'telephone': '+212751622180',
     'address': {
       '@type': 'PostalAddress',
-      'streetAddress': 'Marrakech',
+      'streetAddress': '3ème Étage Bureau N° 16, Angle Bd Moulay Rachid',
       'addressLocality': 'Marrakech',
+      'postalCode': '40000',
       'addressCountry': 'MA'
     },
     'priceRange': '$$',
@@ -137,8 +136,8 @@ export default async function Home({ params }: PageProps) {
       'worstRating': '1'
     },
     'sameAs': [
-      'https://www.instagram.com/skyexperiencemarrakech',
-      'https://www.facebook.com/skyexperiencemarrakech',
+      'https://www.instagram.com/skyexperience_marrakech',
+      'https://web.facebook.com/profile.php?id=61587155890037',
       'https://www.tripadvisor.com/Attraction_Review-g293734-d26645858-Reviews-Sky_Experience_Marrakech-Marrakech_Marrakech_Safi.html'
     ]
   };
