@@ -27,6 +27,8 @@ export default function ReservationsList({ params }: { params: Promise<{ lang: s
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [statusFilter, setStatusFilter] = useState<string>('all');
+    const [startDate, setStartDate] = useState<string>('');
+    const [endDate, setEndDate] = useState<string>('');
 
     // Status update loading state per item
     const [updatingStatus, setUpdatingStatus] = useState<Record<string, boolean>>({});
@@ -82,7 +84,26 @@ export default function ReservationsList({ params }: { params: Promise<{ lang: s
 
         const matchesStatus = statusFilter === 'all' || res.status === statusFilter;
 
-        return matchesSearch && matchesStatus;
+        // Date filtering
+        let matchesDate = true;
+        if (startDate || endDate) {
+            const resDate = new Date(res.date);
+            resDate.setHours(0, 0, 0, 0); // Normalize to midnight
+
+            if (startDate && endDate) {
+                const start = new Date(startDate);
+                const end = new Date(endDate);
+                matchesDate = resDate >= start && resDate <= end;
+            } else if (startDate) {
+                const start = new Date(startDate);
+                matchesDate = resDate >= start;
+            } else if (endDate) {
+                const end = new Date(endDate);
+                matchesDate = resDate <= end;
+            }
+        }
+
+        return matchesSearch && matchesStatus && matchesDate;
     });
 
     const getStatusColor = (status: string) => {
@@ -109,8 +130,9 @@ export default function ReservationsList({ params }: { params: Promise<{ lang: s
             </div>
 
             {/* Filters */}
-            <div className="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm flex flex-col md:flex-row items-center gap-4">
-                <div className="relative flex-1 w-full md:w-auto">
+            <div className="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm space-y-4">
+                {/* Search Bar */}
+                <div className="relative flex-1">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                     <input
                         type="text"
@@ -120,7 +142,44 @@ export default function ReservationsList({ params }: { params: Promise<{ lang: s
                         className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:border-[#C04000] focus:ring-2 focus:ring-orange-100 outline-none"
                     />
                 </div>
-                <div className="flex gap-2 w-full md:w-auto">
+
+                {/* Date Range Filters */}
+                <div className="flex flex-col sm:flex-row gap-4">
+                    <div className="flex-1">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">From Date</label>
+                        <input
+                            type="date"
+                            value={startDate}
+                            onChange={(e) => setStartDate(e.target.value)}
+                            className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-[#C04000] focus:ring-2 focus:ring-orange-100 outline-none"
+                        />
+                    </div>
+                    <div className="flex-1">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">To Date</label>
+                        <input
+                            type="date"
+                            value={endDate}
+                            onChange={(e) => setEndDate(e.target.value)}
+                            className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-[#C04000] focus:ring-2 focus:ring-orange-100 outline-none"
+                        />
+                    </div>
+                    {(startDate || endDate) && (
+                        <div className="flex items-end">
+                            <button
+                                onClick={() => {
+                                    setStartDate('');
+                                    setEndDate('');
+                                }}
+                                className="px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 text-sm font-medium transition-colors whitespace-nowrap"
+                            >
+                                Clear Dates
+                            </button>
+                        </div>
+                    )}
+                </div>
+
+                {/* Status Filters */}
+                <div className="flex gap-2 flex-wrap">
                     {['all', 'pending', 'confirmed', 'cancelled'].map(status => (
                         <button
                             key={status}
