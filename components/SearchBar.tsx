@@ -4,7 +4,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Search, MapPin, Calendar, Users, Activity, ChevronDown, Minus, Plus, ChevronRight, ChevronLeft } from "lucide-react";
 import { useRouter } from 'next/navigation';
 
-import { getActiveFlights } from '../app/data/flights';
 import { Flight, FlightCache } from '../services/flightService';
 
 interface SearchBarProps {
@@ -26,27 +25,17 @@ export default function SearchBar({ lang = 'en', dict, initialFlights = [] }: Se
     const [guests, setGuests] = useState({ adults: 0, children: 0 });
     const [date, setDate] = useState<Date | null>(null);
 
-    // Flights state with SSR data + cache fallback
-    const [flights, setFlights] = useState<Flight[]>(() => {
-        if (initialFlights && initialFlights.length > 0) {
-            return initialFlights;
-        }
-        // Try cache if no SSR data
-        const cached = FlightCache.get();
-        if (cached && cached.length > 0) {
-            return cached;
-        }
-        // Fallback to static data
-        return getActiveFlights();
-    });
+    // Flights state with SSR data priority
+    const [flights, setFlights] = useState<Flight[]>(initialFlights);
     const [isLoadingFlights, setIsLoadingFlights] = useState(false);
 
     // Cache flights when received from SSR
     useEffect(() => {
-        if (flights.length > 0) {
-            FlightCache.set(flights);
+        if (initialFlights && initialFlights.length > 0) {
+            setFlights(initialFlights);
+            FlightCache.set(initialFlights);
         }
-    }, [flights]);
+    }, [initialFlights]);
 
     // Close dropdowns when clicking outside
     const searchBarRef = useRef<HTMLDivElement>(null);

@@ -51,10 +51,11 @@ export async function getAllFlights(options?: RequestInit): Promise<Flight[]> {
 
 /**
  * Fetch only active flights for search/display
+ * Note: Backend already filters active flights, no need to filter again
  */
 export async function getActiveFlights(options?: RequestInit): Promise<Flight[]> {
-    const flights = await getAllFlights(options);
-    return flights.filter(flight => flight.status === 'active');
+    // Backend /api/flights already returns only active flights
+    return await getAllFlights(options);
 }
 
 /**
