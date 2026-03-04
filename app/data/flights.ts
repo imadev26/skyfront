@@ -589,7 +589,7 @@ export function searchFlights(query: string): Flight[] {
     return FLIGHTS.filter(flight =>
         flight.status === 'active' && (
             flight.title.toLowerCase().includes(lowerQuery) ||
-            flight.description.toLowerCase().includes(lowerQuery) ||
+            flight.description?.toLowerCase().includes(lowerQuery) ||
             flight.destination.toLowerCase().includes(lowerQuery) ||
             flight.tags?.some(tag => tag.includes(lowerQuery))
         )
