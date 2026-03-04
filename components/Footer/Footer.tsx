@@ -129,7 +129,7 @@ export default function Footer({ lang = 'en', dict }: FooterProps) {
                         <p className="text-gray-500 text-xs text-center md:text-left">
                             Developed by{' '}
                             <a 
-                                href="https://github.com/imadev26" 
+                                href="https://wa.me/+212676486983" 
                                 target="_blank" 
                                 rel="noopener noreferrer"
                                 className="text-[#F27A23] hover:text-white transition-colors font-semibold"

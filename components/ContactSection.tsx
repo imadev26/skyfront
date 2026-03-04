@@ -74,13 +74,13 @@ export default function ContactSection({ dict, lang }: ContactSectionProps) {
 
                 <div className="grid lg:grid-cols-2 gap-10 items-start">
 
-                    {/* LEFT: Info cards + quick contact */}
+                    {/* LEFT: Info cards + quick contact — desktop only */}
                     <motion.div
                         initial={{ opacity: 0, x: -30 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.7 }}
-                        className="space-y-5"
+                        className="space-y-5 hidden lg:block"
                     >
                         {/* Info cards row */}
                         <div className="grid sm:grid-cols-2 gap-4">
