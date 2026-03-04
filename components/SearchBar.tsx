@@ -93,6 +93,24 @@ export default function SearchBar({ lang = 'en', dict, initialFlights = [] }: Se
     const emptyDays = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1; // Monday = 0
     const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
 
+    // Get today's date at midnight for comparison
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // Check if we can navigate to previous month
+    const canGoPrevMonth = () => {
+        const prevMonth = new Date(year, month - 1, 1);
+        const firstOfCurrentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+        return prevMonth >= firstOfCurrentMonth;
+    };
+
+    // Check if a date is in the past
+    const isPastDate = (day: number) => {
+        const checkDate = new Date(year, month, day);
+        checkDate.setHours(0, 0, 0, 0);
+        return checkDate < today;
+    };
+
     // Handle Search - Redirect to flights page with query params
     const handleSearch = () => {
         const params = new URLSearchParams();
@@ -243,8 +261,17 @@ export default function SearchBar({ lang = 'en', dict, initialFlights = [] }: Se
                             <div className="flex gap-2">
                                 <ChevronLeft
                                     size={20}
-                                    className="text-gray-400 cursor-pointer hover:text-black transition-colors"
-                                    onClick={(e) => { e.stopPropagation(); setCurrentDate(new Date(year, month - 1, 1)); }}
+                                    className={`transition-colors ${
+                                        canGoPrevMonth() 
+                                            ? 'text-gray-400 cursor-pointer hover:text-black' 
+                                            : 'text-gray-200 cursor-not-allowed'
+                                    }`}
+                                    onClick={(e) => { 
+                                        e.stopPropagation(); 
+                                        if (canGoPrevMonth()) {
+                                            setCurrentDate(new Date(year, month - 1, 1)); 
+                                        }
+                                    }}
                                 />
                                 <ChevronRight
                                     size={20}
@@ -259,19 +286,33 @@ export default function SearchBar({ lang = 'en', dict, initialFlights = [] }: Se
                             {/* Empty slots for start of month alignment */}
                             {Array.from({ length: emptyDays }).map((_, i) => <div key={`empty-${i}`} className="p-2" />)}
 
-                            {days.map(d => (
-                                <div key={d}
-                                    className={`w-9 h-9 flex items-center justify-center rounded-full cursor-pointer text-sm font-medium transition-all
-                                        ${date && d === date.getDate() && month === date.getMonth() && year === date.getFullYear()
-                                            ? 'bg-[#C04000] text-white shadow-md shadow-orange-200'
-                                            : 'hover:bg-gray-100 text-gray-700'
-                                        }
-                                    `}
-                                    onClick={() => { setDate(new Date(year, month, d)); setActiveDropdown(null); }}
-                                >
-                                    {d}
-                                </div>
-                            ))}
+                            {days.map(d => {
+                                const isDisabled = isPastDate(d);
+                                const isSelected = date && d === date.getDate() && month === date.getMonth() && year === date.getFullYear();
+                                
+                                return (
+                                    <div 
+                                        key={d}
+                                        className={`w-9 h-9 flex items-center justify-center rounded-full text-sm font-medium transition-all
+                                            ${
+                                                isDisabled 
+                                                    ? 'text-gray-300 cursor-not-allowed' 
+                                                    : isSelected
+                                                        ? 'bg-[#C04000] text-white shadow-md shadow-orange-200 cursor-pointer'
+                                                        : 'hover:bg-gray-100 text-gray-700 cursor-pointer'
+                                            }
+                                        `}
+                                        onClick={() => { 
+                                            if (!isDisabled) {
+                                                setDate(new Date(year, month, d)); 
+                                                setActiveDropdown(null);
+                                            }
+                                        }}
+                                    >
+                                        {d}
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                 )}
