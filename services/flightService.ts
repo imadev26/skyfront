@@ -27,11 +27,12 @@ export interface Flight {
 /**
  * Fetch all flights from backend (SSR compatible)
  * @param options Fetch options (cache, revalidate, etc.)
+ * Default: 30s revalidation for near real-time destination updates
  */
 export async function getAllFlights(options?: RequestInit): Promise<Flight[]> {
     try {
         const response = await fetch(`${API_URL}/flights`, {
-            next: { revalidate: 300 }, // Revalidate every 5 minutes
+            next: { revalidate: 30 }, // Revalidate every 30 seconds
             ...options,
         });
 

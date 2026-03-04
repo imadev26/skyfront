@@ -115,7 +115,7 @@ export default async function Home({ params }: PageProps) {
   // Fetch data in parallel for better performance
   const [featuredFlights, allActiveFlights] = await Promise.all([
     getFeaturedFlightsData(lang),
-    getActiveFlights({ next: { revalidate: 300 } }) // Revalidate every 5 minutes
+    getActiveFlights() // Always fetch fresh data for SearchBar destinations
   ]);
 
   const jsonLd = {
