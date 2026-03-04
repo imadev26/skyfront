@@ -64,6 +64,35 @@ export default function SearchBar({ lang = 'en', dict, initialFlights = [] }: Se
         setActiveDropdown(activeDropdown === name ? null : name);
     };
 
+    // Get unique destinations from flights
+    const availableDestinations = React.useMemo(() => {
+        const destinations = flights
+            .map(f => f.destination)
+            .filter(Boolean);
+        return Array.from(new Set(destinations)).sort();
+    }, [flights]);
+
+    // Filter flights by selected destination
+    const filteredFlights = React.useMemo(() => {
+        if (!destination) return [];
+        return flights.filter(f => 
+            f.destination.toLowerCase() === destination.toLowerCase()
+        );
+    }, [flights, destination]);
+
+    // Reset activity when destination changes
+    useEffect(() => {
+        if (destination && activity) {
+            const activityExists = filteredFlights.some(f => {
+                const title = lang === 'fr' && f.title_fr ? f.title_fr : f.title;
+                return title === activity;
+            });
+            if (!activityExists) {
+                setActivity('');
+            }
+        }
+    }, [destination, filteredFlights, activity, lang]);
+
     // Calendar Data Helper - Dynamic
     const locale = lang === 'fr' ? 'fr-FR' : 'en-US';
     const [currentDate, setCurrentDate] = useState(new Date());
@@ -122,26 +151,34 @@ export default function SearchBar({ lang = 'en', dict, initialFlights = [] }: Se
                 {activeDropdown === 'destinations' && (
                     <div className="absolute top-full left-0 right-0 md:w-full md:min-w-[280px] bg-white rounded-xl shadow-[0_20px_60px_-15px_rgba(192,64,0,0.3)] mt-2 xs:mt-3 md:mt-4 py-2 z-[100] border-2 border-[#C04000]/20 max-h-[280px] overflow-y-auto">
                         <div className="px-4 xs:px-6 py-2 xs:py-3 text-[10px] xs:text-xs font-bold text-gray-400 uppercase tracking-wider cursor-default bg-gray-50/50">— {t.all_destinations || 'All Destinations'} —</div>
-                        {['Agadir', 'Marrakech'].map(city => (
-                            <div
-                                key={city}
-                                className="px-4 xs:px-6 py-3 xs:py-3.5 hover:bg-orange-50 cursor-pointer text-gray-700 font-medium transition-all hover:text-[#C04000] hover:pl-5 xs:hover:pl-7 border-b border-gray-100 last:border-b-0"
-                                onClick={(e) => { e.stopPropagation(); setDestination(city); setActiveDropdown(null); }}
-                            >
-                                <div className="flex items-center gap-2">
-                                    <MapPin size={14} className="text-[#C04000] opacity-0 group-hover:opacity-100" />
-                                    <span className="text-sm xs:text-base">{city}</span>
+                        {availableDestinations.length > 0 ? (
+                            availableDestinations.map(city => (
+                                <div
+                                    key={city}
+                                    className="px-4 xs:px-6 py-3 xs:py-3.5 hover:bg-orange-50 cursor-pointer text-gray-700 font-medium transition-all hover:text-[#C04000] hover:pl-5 xs:hover:pl-7 border-b border-gray-100 last:border-b-0"
+                                    onClick={(e) => { e.stopPropagation(); setDestination(city); setActiveDropdown(null); }}
+                                >
+                                    <div className="flex items-center gap-2">
+                                        <MapPin size={14} className="text-[#C04000] opacity-0 group-hover:opacity-100" />
+                                        <span className="text-sm xs:text-base">{city}</span>
+                                    </div>
                                 </div>
+                            ))
+                        ) : (
+                            <div className="px-4 xs:px-6 py-4 text-center text-gray-500 text-sm">
+                                {t.no_destinations || 'No destinations available'}
                             </div>
-                        ))}
+                        )}
                     </div>
                 )}
             </div>
 
             {/* --- ACTIVITY --- */}
             <div
-                className={`flex-1 relative border-b md:border-b-0 md:border-r border-gray-100 p-3 xs:p-4 md:p-6 cursor-pointer hover:bg-gray-50 transition-colors rounded-t-2xl md:rounded-none ${activeDropdown === 'activity' ? 'bg-gray-50' : ''}`}
-                onClick={() => toggleDropdown('activity')}
+                className={`flex-1 relative border-b md:border-b-0 md:border-r border-gray-100 p-3 xs:p-4 md:p-6 cursor-pointer transition-colors rounded-t-2xl md:rounded-none ${
+                    !destination ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-50'
+                } ${activeDropdown === 'activity' ? 'bg-gray-50' : ''}`}
+                onClick={() => destination && toggleDropdown('activity')}
             >
                 <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2 xs:gap-3">
@@ -151,19 +188,24 @@ export default function SearchBar({ lang = 'en', dict, initialFlights = [] }: Se
                     <ChevronDown size={18} className={`text-gray-400 transition-transform duration-300 ${activeDropdown === 'activity' ? 'rotate-180' : ''}`} />
                 </div>
                 <p className="text-xs xs:text-sm text-gray-500 pl-7 xs:pl-9 truncate font-medium">
-                    {activity || t.all_activity || 'All Activity'}
+                    {!destination 
+                        ? (t.select_destination_first || 'Select destination first') 
+                        : (activity || t.all_activity || 'All Activity')
+                    }
                 </p>
 
                 {/* Dropdown Menu */}
-                {activeDropdown === 'activity' && (
+                {activeDropdown === 'activity' && destination && (
                     <div className="absolute top-full left-0 right-0 md:w-full md:min-w-[320px] bg-white rounded-xl shadow-[0_20px_60px_-15px_rgba(192,64,0,0.3)] mt-2 xs:mt-3 md:mt-4 py-2 z-[100] border-2 border-[#C04000]/20 max-h-[320px] overflow-y-auto">
-                        <div className="px-4 xs:px-6 py-2 xs:py-3 text-[10px] xs:text-xs font-bold text-gray-400 uppercase tracking-wider cursor-default bg-gray-50/50 sticky top-0">— {t.all_activity || 'All Activity'} —</div>
+                        <div className="px-4 xs:px-6 py-2 xs:py-3 text-[10px] xs:text-xs font-bold text-gray-400 uppercase tracking-wider cursor-default bg-gray-50/50 sticky top-0">
+                            — {t.activities_in || 'Activities in'} {destination} —
+                        </div>
                         {isLoadingFlights ? (
                             <div className="px-4 xs:px-6 py-4 text-center text-gray-500 text-sm">
                                 <div className="animate-pulse">Loading activities...</div>
                             </div>
-                        ) : flights.length > 0 ? (
-                            flights.map(item => (
+                        ) : filteredFlights.length > 0 ? (
+                            filteredFlights.map(item => (
                                 <div
                                     key={item._id || item.slug}
                                     className="px-4 xs:px-6 py-2.5 xs:py-3 hover:bg-orange-50 cursor-pointer text-gray-700 font-medium transition-all hover:text-[#C04000] hover:pl-5 xs:hover:pl-7 border-b border-gray-100 last:border-b-0"
@@ -181,7 +223,7 @@ export default function SearchBar({ lang = 'en', dict, initialFlights = [] }: Se
                             ))
                         ) : (
                             <div className="px-4 xs:px-6 py-4 text-center text-gray-500 text-sm">
-                                {t.no_activities || 'No activities available'}
+                                {t.no_activities_destination || `No activities in ${destination}`}
                             </div>
                         )}
                     </div>
